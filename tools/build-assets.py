@@ -25,7 +25,7 @@ from scipy import ndimage as nd
 ROOT = Path(__file__).resolve().parent.parent
 SRC = ROOT / "assets" / "originals"
 OUT = ROOT / "assets" / "img"
-WIDTHS = [640, 1024, 1600, 2400]
+WIDTHS = [640, 1024, 1600, 2048, 2400]
 QUALITY = {"avif": 62, "webp": 82, "jpeg": 84}  # AVIF 62 ~ JPEG 85 visualmente
 
 # nome final -> (arquivo original, caixa de recorte ou None)
@@ -38,6 +38,25 @@ IMAGES = {
     "salao-lanternas": ("salao-lanternas.jpg", None),
     "letreiro-logo": ("letreiro-logo.jpg", None),
 }
+
+# Fotos novas por contexto. Se existir "<nome>@4x.jpg" (ampliada por IA com
+# Real-ESRGAN), ela é usada e reduzida para no máximo HD_MAX px de largura.
+HD_IMAGES = {
+    "filosofia-corte": "filosofia-corte.jpg",
+    "assinatura-uramaki": "assinatura-uramaki.jpg",
+    "combinado-chef": "combinado-chef.jpg",
+    "menu-niguiris": "menu-niguiris.jpg",
+    "menu-uramakis": "menu-uramakis.jpg",
+}
+HD_MAX = 2048
+
+
+def load_hd(file):
+    hi = SRC / file.replace(".jpg", "@4x.jpg")
+    img = Image.open(hi if hi.exists() else SRC / file).convert("RGB")
+    if img.width > HD_MAX:
+        img = img.resize((HD_MAX, round(img.height * HD_MAX / img.width)), Image.LANCZOS)
+    return img
 
 
 def widths_for(w):
@@ -143,6 +162,8 @@ def main():
         if box:
             img = img.crop(box)
         manifest[name] = save_all(img, name)
+    for name, file in HD_IMAGES.items():
+        manifest[name] = save_all(load_hd(file), name)
     # imagem de compartilhamento (Open Graph) 1200x630, fundo preto
     og = Image.new("RGB", (1200, 630), (10, 9, 8))
     hero = Image.open(SRC / "niguiri-salmao-macaricado.jpg").convert("RGB").crop((40, 200, 736, 632))

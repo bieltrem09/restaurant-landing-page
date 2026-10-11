@@ -46,6 +46,45 @@
     "w": 736,
     "h": 736
   },
+  "filosofia-corte": {
+    "widths": [
+      640,
+      1024
+    ],
+    "w": 1024,
+    "h": 687
+  },
+  "assinatura-uramaki": {
+    "widths": [
+      572
+    ],
+    "w": 572,
+    "h": 1024
+  },
+  "combinado-chef": {
+    "widths": [
+      640,
+      687
+    ],
+    "w": 687,
+    "h": 1024
+  },
+  "menu-niguiris": {
+    "widths": [
+      640,
+      1024
+    ],
+    "w": 1024,
+    "h": 572
+  },
+  "menu-uramakis": {
+    "widths": [
+      640,
+      1024
+    ],
+    "w": 1024,
+    "h": 572
+  },
   "hero-niguiri": {
     "widths": [
       1024,
