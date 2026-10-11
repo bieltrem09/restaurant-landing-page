@@ -16,11 +16,16 @@ export function CommandPalette({ open, onClose }: { open: boolean; onClose: () =
   const [leads, setLeads] = useState<Array<{ id: string; nome: string; nicho: string; bairro: string | null; score: number }>>([]);
   const input = useRef<HTMLInputElement>(null);
 
+  const [prevOpen, setPrevOpen] = useState(open);
+  if (prevOpen !== open) {
+    setPrevOpen(open);
+    if (open) {
+      setQ("");
+      setSel(0);
+    }
+  }
   useEffect(() => {
-    if (!open) return;
-    setQ("");
-    setSel(0);
-    setTimeout(() => input.current?.focus(), 10);
+    if (open) setTimeout(() => input.current?.focus(), 10);
   }, [open]);
 
   useEffect(() => {
@@ -68,8 +73,14 @@ export function CommandPalette({ open, onClose }: { open: boolean; onClose: () =
   if (!open) return null;
   const onKey = (e: React.KeyboardEvent) => {
     if (e.key === "Escape") onClose();
-    if (e.key === "ArrowDown") (e.preventDefault(), setSel((s) => Math.min(items.length - 1, s + 1)));
-    if (e.key === "ArrowUp") (e.preventDefault(), setSel((s) => Math.max(0, s - 1)));
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      setSel((s) => Math.min(items.length - 1, s + 1));
+    }
+    if (e.key === "ArrowUp") {
+      e.preventDefault();
+      setSel((s) => Math.max(0, s - 1));
+    }
     if (e.key === "Enter") items[sel]?.run();
   };
   let lastGroup = "";

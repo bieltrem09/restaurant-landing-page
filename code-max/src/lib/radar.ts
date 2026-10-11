@@ -37,7 +37,7 @@ export type Place = {
   addressComponents?: Array<{ longText: string; types: string[] }>;
 };
 
-const CACHE_DAYS = 30;
+export const CACHE_DAYS = 30;
 const MAX_PAGES = 3; // 20 por página → até 60 resultados
 
 // ---------------------------------------------------------------- uso e limite
@@ -59,17 +59,6 @@ export function estimateCalls(opts: { hasPoint: boolean; cachedQuery: boolean })
 }
 
 // ---------------------------------------------------------------- cache
-async function cacheGet<T>(admin: SupabaseClient, key: string): Promise<T | null> {
-  const { data } = await admin.from("places_cache").select("payload_json, coletado_em").eq("place_id", key).maybeSingle();
-  if (!data) return null;
-  if (Date.now() - new Date(data.coletado_em).getTime() > CACHE_DAYS * 86_400_000) return null;
-  return data.payload_json as T;
-}
-
-async function cachePut(admin: SupabaseClient, key: string, payload: unknown) {
-  await admin.from("places_cache").upsert({ place_id: key, payload_json: payload, coletado_em: new Date().toISOString() });
-}
-
 export function queryCacheKey(q: { nicho: string; cidade: string; bairro?: string | null; lat?: number | null; lng?: number | null; raioKm: number }) {
   const loc = q.lat != null && q.lng != null ? `${q.lat.toFixed(3)},${q.lng.toFixed(3)}` : `${q.bairro ?? ""}|${q.cidade}`.toLowerCase();
   return `q:${q.nicho}|${loc}|${q.raioKm}`;

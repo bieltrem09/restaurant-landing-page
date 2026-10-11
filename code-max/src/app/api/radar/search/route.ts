@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { handler, parseJson, rateLimit, requireApiUser, ApiError } from "@/lib/api";
 import { getDoNotContact, logActivity } from "@/lib/data";
 import { NICHE_BY_KEY } from "@/lib/niches";
-import { estimateCalls, geocodeArea, placeToLead, placesUsageThisMonth, queryCacheKey, recordUsage, textSearchAll, type Place } from "@/lib/radar";
+import { CACHE_DAYS, estimateCalls, geocodeArea, placeToLead, placesUsageThisMonth, queryCacheKey, recordUsage, textSearchAll, type Place } from "@/lib/radar";
 import { supabaseAdmin, supabaseServer } from "@/lib/supabase/server";
 import { searchSchema } from "../schema";
 
@@ -26,7 +26,7 @@ export const POST = handler(async (req: Request) => {
   const key = queryCacheKey(input);
   const { data: cacheRow } = await admin.from("places_cache").select("payload_json, coletado_em").eq("place_id", key).maybeSingle();
   let payload: CachedQuery | null =
-    cacheRow && Date.now() - new Date(cacheRow.coletado_em).getTime() < 30 * 86_400_000 ? (cacheRow.payload_json as CachedQuery) : null;
+    cacheRow && Date.now() - new Date(cacheRow.coletado_em).getTime() < CACHE_DAYS * 86_400_000 ? (cacheRow.payload_json as CachedQuery) : null;
 
   let calls = 0;
   const { data: search } = await sb
@@ -91,7 +91,7 @@ export const POST = handler(async (req: Request) => {
     await sb.from("leads").update({ enriquecimento: "pendente" }).eq("search_id", search.id);
     await sb.from("jobs").insert(leads.map((l) => ({ user_id: user.id, tipo: "enrich_lead", payload: { lead_id: l.id, search_id: search.id } })));
   }
-  await sb.from("searches").update({ status: "enriquecendo", chamadas_usadas: calls, total_resultados: leads?.length ?? 0 }).eq("id", search.id);
+  await sb.from("searches").update({ status: leads?.length ? "enriquecendo" : "concluida", chamadas_usadas: calls, total_resultados: leads?.length ?? 0, lat: payload.center.lat, lng: payload.center.lng }).eq("id", search.id);
   await logActivity(sb, user.id, "busca", `Radar: ${leads?.length ?? 0} ${niche.label.toLowerCase()}s em ${[input.bairro, input.cidade].filter(Boolean).join(", ")}`);
 
   return NextResponse.json({ searchId: search.id, total: leads?.length ?? 0, calls, cache: calls === 0, center: payload.center });

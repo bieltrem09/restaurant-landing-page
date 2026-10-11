@@ -106,19 +106,27 @@ export function LeadDrawer({ id, onClose }: { id: string | null; onClose: () => 
   const copy = useCopy();
   const router = useRouter();
 
-  const load = useCallback(async (leadId: string) => {
-    setLoading(true);
-    const r = await fetch(`/api/leads/${leadId}`);
-    setLead(r.ok ? await r.json() : null);
-    setLoading(false);
+  const load = useCallback((leadId: string) => {
+    return fetch(`/api/leads/${leadId}`)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d) => {
+        setLead(d);
+        setLoading(false);
+      });
   }, []);
 
-  useEffect(() => {
-    if (id) void load(id);
-    else {
+  const [prevId, setPrevId] = useState<string | null>(null);
+  if (prevId !== id) {
+    setPrevId(id);
+    setLoading(!!id);
+    if (!id) {
       setLead(null);
       setSnippet(null);
     }
+  }
+
+  useEffect(() => {
+    if (id) void load(id);
   }, [id, load]);
 
   useEffect(() => {

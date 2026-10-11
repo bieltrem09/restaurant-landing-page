@@ -244,7 +244,7 @@ export function OrdeliryChat({
     <div className="chat" style={compact ? { height: "calc(100dvh - 150px)", minHeight: 0 } : undefined}>
       <div className="modes" role="tablist" aria-label="Modo da Ordeliry">
         {(Object.keys(MODES) as Mode[]).map((m) => (
-          <button key={m} type="button" role="tab" className="tog" aria-pressed={mode === m} aria-selected={mode === m} onClick={() => setMode(m)}>
+          <button key={m} type="button" role="tab" className="tog" aria-selected={mode === m} onClick={() => setMode(m)}>
             {MODES[m]}
           </button>
         ))}

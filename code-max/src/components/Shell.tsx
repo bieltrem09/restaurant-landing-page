@@ -47,7 +47,8 @@ export function Shell({ children, profile, goal, badges }: ShellProps) {
   const [leadId, setLeadId] = useState<string | null>(null);
   const [ordeliry, setOrdeliry] = useState<OrdeliryOpen | null>(null);
   const [palette, setPalette] = useState(false);
-  const [theme, setTheme] = useState<"light" | "dark" | null>(null);
+  // O script inline do layout já aplicou o tema salvo; aqui guardamos a escolha do perfil.
+  const [theme, setTheme] = useState<"light" | "dark" | null>(profile.tema === "system" ? null : profile.tema);
 
   const groups: Array<{ label: string; items: NavItem[] }> = [
     {
@@ -78,33 +79,28 @@ export function Shell({ children, profile, goal, badges }: ShellProps) {
     else setPill((p) => ({ ...p, on: false }));
   }, [pathname]);
 
-  useEffect(() => setMenuOpen(false), [pathname]);
+  const [prevPath, setPrevPath] = useState(pathname);
+  if (prevPath !== pathname) {
+    setPrevPath(pathname);
+    setMenuOpen(false);
+  }
 
-  // Tema: salvo por usuário (perfil) e espelhado no navegador para não piscar.
   useEffect(() => {
-    const t = profile.tema === "system" ? null : profile.tema;
-    const local = (() => {
+    // Perfil manda no tema entre dispositivos; espelha no navegador para não piscar.
+    if (theme) {
+      document.documentElement.dataset.theme = theme;
       try {
-        return localStorage.getItem("cm-theme");
-      } catch {
-        return null;
-      }
-    })();
-    const eff = (local === "light" || local === "dark" ? local : t) as "light" | "dark" | null;
-    setTheme(eff);
-    if (eff) document.documentElement.dataset.theme = eff;
+        localStorage.setItem("cm-theme", theme);
+      } catch {}
+    }
     // Cookie de exclusão: o próprio vendedor não conta como visita nos sites rastreados.
     document.cookie = "cm_excluir=1; path=/; max-age=31536000; SameSite=None; Secure";
-  }, [profile.tema]);
+  }, [theme]);
 
   const toggleTheme = () => {
     const current = theme ?? (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
     const next = current === "dark" ? "light" : "dark";
     setTheme(next);
-    document.documentElement.dataset.theme = next;
-    try {
-      localStorage.setItem("cm-theme", next);
-    } catch {}
     void saveSettings({ tema: next });
   };
 
