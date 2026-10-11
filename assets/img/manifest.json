@@ -1,0 +1,57 @@
+{
+  "niguiri-salmao-macaricado": {
+    "widths": [
+      640,
+      696
+    ],
+    "w": 696,
+    "h": 432
+  },
+  "niguiri-salmao-macaricado-recorte": {
+    "widths": [
+      640,
+      696
+    ],
+    "w": 696,
+    "h": 432
+  },
+  "prato-combinado": {
+    "widths": [
+      640,
+      735
+    ],
+    "w": 735,
+    "h": 1307
+  },
+  "prato-detalhe": {
+    "widths": [
+      490
+    ],
+    "w": 490,
+    "h": 700
+  },
+  "balcao-sakura": {
+    "widths": [
+      640,
+      736
+    ],
+    "w": 736,
+    "h": 981
+  },
+  "salao-lanternas": {
+    "widths": [
+      640,
+      720
+    ],
+    "w": 720,
+    "h": 1280
+  },
+  "letreiro-logo": {
+    "widths": [
+      640,
+      736
+    ],
+    "w": 736,
+    "h": 736
+  }
+}

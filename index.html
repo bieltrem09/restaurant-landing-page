@@ -1,313 +1,822 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" class="no-js">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Sushi — Japanese Restaurant | A arte do corte perfeito</title>
+    <meta
+      name="description"
+      content="Sushi Japanese Restaurant: peixe fresco do dia, arroz temperado na hora e técnica japonesa. Omakase no balcão, cardápio de niguiris, uramakis e sashimis. Reserve sua mesa."
+    />
+    <meta name="theme-color" content="#0A0908" />
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="restaurant" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:title" content="Sushi — Japanese Restaurant" />
+    <meta property="og:description" content="A arte do corte perfeito. Peixe fresco, técnica japonesa, experiência única." />
+    <meta property="og:image" content="assets/img/og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Fontes: preconnect + preload da fonte de título, display=swap -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css"
-      rel="stylesheet"
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Montserrat:wght@300;400;500&family=Pinyon+Script&display=swap"
     />
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Montserrat:wght@300;400;500&family=Pinyon+Script&display=swap"
     />
-    <link rel="stylesheet" href="styles.css" />
-    <title>Web Design Mastery | Foodman</title>
+    <!-- Kanji decorativos: subconjunto mínimo da fonte -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500&display=swap&text=%E5%AF%BF%E5%8F%B8%E5%8C%A0%E9%AE%A8%E6%A1%9C%E5%92%8C"
+    />
+
+    <!-- LCP: imagem do hero -->
+    <link
+      rel="preload"
+      as="image"
+      type="image/avif"
+      imagesrcset="assets/img/niguiri-salmao-macaricado-640.avif 640w, assets/img/niguiri-salmao-macaricado-696.avif 696w"
+      imagesizes="(min-width: 1024px) 58vw, 100vw"
+      fetchpriority="high"
+    />
+
+    <link rel="stylesheet" href="css/styles.css" />
+    <script>
+      // Marca JS ativo (estados iniciais das animações só existem com JS)
+      (function (d) {
+        d.classList.replace("no-js", "js");
+        // Preloader só na primeira visita da sessão
+        try {
+          if (sessionStorage.getItem("sushi-visited")) d.classList.add("no-preloader");
+        } catch (e) {}
+        // Segurança: se os scripts de animação não carregarem, mostra tudo
+        setTimeout(function () {
+          if (!d.classList.contains("motion-ready")) d.classList.remove("js");
+        }, 5000);
+      })(document.documentElement);
+    </script>
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Restaurant",
+        "name": "Sushi — Japanese Restaurant",
+        "image": "assets/img/og-image.jpg",
+        "servesCuisine": ["Japonesa", "Sushi", "Omakase"],
+        "priceRange": "$$$",
+        "telephone": "+55 11 99999-9999",
+        "menu": "#cardapio",
+        "acceptsReservations": "True",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Rua das Cerejeiras, 120",
+          "addressLocality": "São Paulo",
+          "addressRegion": "SP",
+          "postalCode": "01400-000",
+          "addressCountry": "BR"
+        },
+        "openingHoursSpecification": [
+          { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Tuesday", "Wednesday", "Thursday"], "opens": "18:30", "closes": "23:00" },
+          { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Friday", "Saturday"], "opens": "18:30", "closes": "00:00" },
+          { "@type": "OpeningHoursSpecification", "dayOfWeek": "Sunday", "opens": "12:00", "closes": "16:00" }
+        ],
+        "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.9", "reviewCount": "1280" }
+      }
+    </script>
   </head>
-  
+
   <body>
-    <nav>
-      <div class="nav__header">
-        <div class="logo nav__logo">
-          <a href="#">Food<span>man</span></a>
-        </div>
-        <div class="nav__menu__btn" id="menu-btn">
-          <span><i class="ri-menu-line"></i></span>
-        </div>
+    <!-- ===== Símbolos SVG reutilizáveis (logo e flor de cerejeira) ===== -->
+    <svg width="0" height="0" style="position: absolute" aria-hidden="true" focusable="false">
+      <defs>
+        <symbol id="sakura" viewBox="-6 -6 12 12">
+          <g fill="var(--red)">
+            <circle cx="0" cy="-2.9" r="2.4" />
+            <circle cx="2.76" cy="-0.9" r="2.4" />
+            <circle cx="1.7" cy="2.35" r="2.4" />
+            <circle cx="-1.7" cy="2.35" r="2.4" />
+            <circle cx="-2.76" cy="-0.9" r="2.4" />
+          </g>
+          <circle r="1.1" fill="var(--gold-soft)" />
+        </symbol>
+        <symbol id="logo-mark" viewBox="0 0 120 120">
+          <path d="M86.4 24.3A46 46 0 1 0 99.8 85" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" />
+          <circle cx="54" cy="52" r="17" fill="var(--red)" />
+          <path d="M22 86 45 62c3-3 7-4 10-3 3-1 6 0 9 3l24 24Z" fill="currentColor" />
+          <path d="M46 63.5 50 64l2-3 3 4 3-3.5 4 2.5" fill="none" stroke="var(--bg)" stroke-width="1.6" stroke-linejoin="round" />
+          <path d="M16 88c12-6 22 4 36-2s26-2 40 4M24 97c12-5 24 3 38-2s22-1 34 3" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
+          <path d="M98 86c6-20 2-40-8-56-4-6-6-12-10-18M100 60c6-4 10-10 12-16M93 38c5-4 9-10 10-16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" />
+          <use href="#sakura" x="74" y="6" width="12" height="12" />
+          <use href="#sakura" x="106" y="38" width="12" height="12" />
+          <use href="#sakura" x="97" y="16" width="12" height="12" />
+          <use href="#sakura" x="84" y="25" width="10" height="10" />
+          <use href="#sakura" x="96" y="46" width="10" height="10" />
+          <use href="#sakura" x="101" y="66" width="11" height="11" />
+        </symbol>
+        <symbol id="branch" viewBox="0 0 320 220">
+          <path d="M0 210C60 190 110 160 150 120s70-80 120-100M150 120c20 10 50 12 80 4M200 72c-6-20-2-40 10-56M92 165c-4-22 4-40 20-54" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          <use href="#sakura" x="262" y="10" width="16" height="16" />
+          <use href="#sakura" x="226" y="116" width="14" height="14" />
+          <use href="#sakura" x="202" y="6" width="14" height="14" />
+          <use href="#sakura" x="104" y="98" width="13" height="13" />
+          <use href="#sakura" x="170" y="96" width="12" height="12" />
+          <use href="#sakura" x="240" y="34" width="10" height="10" />
+          <use href="#sakura" x="130" y="134" width="10" height="10" />
+        </symbol>
+      </defs>
+    </svg>
+
+    <!-- ===== 4.1 Preloader ===== -->
+    <div class="preloader" id="preloader" aria-hidden="true">
+      <div class="preloader__inner">
+        <svg class="preloader__logo" viewBox="0 0 120 120">
+          <path class="pl-draw" d="M86.4 24.3A46 46 0 1 0 99.8 85" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" />
+          <circle class="pl-sun" cx="54" cy="52" r="17" fill="var(--red)" />
+          <path class="pl-draw pl-mountain" d="M22 86 45 62c3-3 7-4 10-3 3-1 6 0 9 3l24 24Z" fill="currentColor" fill-opacity="0" stroke="currentColor" stroke-width="1.5" />
+          <path class="pl-draw" d="M16 88c12-6 22 4 36-2s26-2 40 4M24 97c12-5 24 3 38-2s22-1 34 3" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
+          <path class="pl-draw" d="M98 86c6-20 2-40-8-56-4-6-6-12-10-18M100 60c6-4 10-10 12-16M93 38c5-4 9-10 10-16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" />
+          <use class="pl-flower" href="#sakura" x="74" y="6" width="12" height="12" />
+          <use class="pl-flower" href="#sakura" x="97" y="16" width="12" height="12" />
+          <use class="pl-flower" href="#sakura" x="84" y="25" width="10" height="10" />
+          <use class="pl-flower" href="#sakura" x="106" y="38" width="12" height="12" />
+          <use class="pl-flower" href="#sakura" x="96" y="46" width="10" height="10" />
+          <use class="pl-flower" href="#sakura" x="101" y="66" width="11" height="11" />
+        </svg>
+        <p class="preloader__word">SUSHI</p>
+        <p class="preloader__count"><span id="preloader-count">0</span></p>
       </div>
-      <ul class="nav__links" id="nav-links">
-        <li><a href="#home">Início</a></li>
-        <li><a href="#special">Especiais</a></li>
-        <li><a href="#chef">Chefs</a></li>
-        <li><a href="#client">Clientes</a></li>
-        <li><a href="#contact">Fale Conosco</a></li>
-      </ul>
-      <div class="nav__btn">
-        <button class="btn"><i class="ri-shopping-bag-fill"></i></button>
-      </div>
-    </nav>
-    <header class="section__container header__container" id="home">
-      <div class="header__image">
-        <img src="assets/header.png" alt="header" />
-      </div>
-      <div class="header__content">
-        <h1>Encontre, Coma e Aproveite o <span>Verdadeiro Sabor</span>.</h1>
-        <p class="section__description">
-          Descubra a verdadeira essência da delícia culinária ao se encontrar, comer e 
-          saborear os sabores autênticos que definem nossa paixão pela comida.
-        </p>
-        <div class="header__btn">
-          <button class="btn">Começar</button>
+      <div class="preloader__curtain"></div>
+    </div>
+
+    <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+    <div class="progress-bar" aria-hidden="true"><span></span></div>
+    <div class="grain" aria-hidden="true"></div>
+    <div class="cursor" aria-hidden="true"><span class="cursor__label"></span></div>
+
+    <!-- ===== 4.2 Header ===== -->
+    <header class="header" id="header">
+      <div class="header__inner">
+        <a href="#inicio" class="brand" aria-label="Sushi Japanese Restaurant — voltar ao início">
+          <svg class="brand__mark" aria-hidden="true"><use href="#logo-mark" /></svg>
+          <span class="brand__text">
+            <span class="brand__name">SUSHI</span>
+            <span class="brand__tag">Japanese Restaurant</span>
+          </span>
+        </a>
+
+        <nav class="nav" aria-label="Navegação principal">
+          <ul class="nav__list">
+            <li><a class="nav__link" href="#inicio">Início</a></li>
+            <li><a class="nav__link" href="#cardapio">Cardápio</a></li>
+            <li><a class="nav__link" href="#chef">Chef</a></li>
+            <li><a class="nav__link" href="#ambiente">Ambiente</a></li>
+            <li><a class="nav__link" href="#reservas">Reservas</a></li>
+            <li><a class="nav__link" href="#contato">Contato</a></li>
+          </ul>
+        </nav>
+
+        <div class="header__actions">
+          <a href="#reservas" class="btn btn--light btn--sm header__cta" data-cursor="Reservar">
+            <span>Reservar Mesa</span>
+            <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#i-arrow-right" /></svg>
+          </a>
+          <button class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="mobile-menu" aria-label="Abrir menu">
+            <span class="menu-toggle__line"></span>
+            <span class="menu-toggle__line"></span>
+          </button>
         </div>
       </div>
     </header>
 
-    <section class="section__container special__container" id="special">
-      <h2 class="section__header">Nosso Prato Especial</h2>
-      <p class="section__description">
-        Cada prato promete uma experiência gastronômica inesquecível, misturando 
-        inovação com tradição para encantar seus sentidos.
-      </p>
-      <div class="special__grid">
-        <div class="special__card">
-          <img src="assets/special-1.png" alt="special" />
-          <h4>Curry de Frango e Vegetais</h4>
-          <p>
-            Frango em cubos cozido em molho de curry aromático com uma mistura de 
-            vegetais como batatas, couve-flor e feijão para um prato farto e saboroso.
-          </p>
-          <div class="special__ratings">
-            <span><i class="ri-star-fill"></i></span>
-            <span><i class="ri-star-fill"></i></span>
-            <span><i class="ri-star-fill"></i></span>
-            <span><i class="ri-star-fill"></i></span>
-            <span><i class="ri-star-fill"></i></span>
-          </div>
-          <div class="special__footer">
-            <p class="price">R$ 68,90</p>
-            <button class="btn">Adicionar ao Carrinho</button>
-          </div>
-        </div>
-        <div class="special__card">
-          <img src="assets/special-2.png" alt="special" />
-          <h4>Refogado de Frango e Vegetais</h4>
-          <p>
-            Tiras tenras de frango salteadas na wok com uma variedade colorida de 
-            vegetais frescos em uma saborosa mistura de temperos e molhos.
-          </p>
-          <div class="special__ratings">
-            <span><i class="ri-star-fill"></i></span>
-            <span><i class="ri-star-fill"></i></span>
-            <span><i class="ri-star-fill"></i></span>
-            <span><i class="ri-star-fill"></i></span>
-            <span><i class="ri-star-fill"></i></span>
-          </div>
-          <div class="special__footer">
-            <p class="price">R$ 56,99</p>
-            <button class="btn">Adicionar ao Carrinho</button>
-          </div>
-        </div>
-        <div class="special__card">
-          <img src="assets/special-3.png" alt="special" />
-          <h4>Macarrão com Frango e Vegetais</h4>
-          <p>
-            Massa al dente misturada com tiras de frango e uma mistura de vegetais 
-            vibrantes em um cremoso molho de alho e ervas, oferecendo uma deliciosa experiência.
-          </p>
-          <div class="special__ratings">
-            <span><i class="ri-star-fill"></i></span>
-            <span><i class="ri-star-fill"></i></span>
-            <span><i class="ri-star-fill"></i></span>
-            <span><i class="ri-star-fill"></i></span>
-            <span><i class="ri-star-fill"></i></span>
-          </div>
-          <div class="special__footer">
-            <p class="price">R$ 47,50</p>
-            <button class="btn">Adicionar ao Carrinho</button>
-          </div>
-        </div>
+    <!-- Menu fullscreen -->
+    <div class="mobile-menu" id="mobile-menu" hidden>
+      <svg class="mobile-menu__branch" aria-hidden="true"><use href="#branch" /></svg>
+      <span class="mobile-menu__kanji" aria-hidden="true">寿司</span>
+      <nav aria-label="Menu">
+        <ul class="mobile-menu__list">
+          <li><a href="#inicio"><span class="mm-num">01</span>Início</a></li>
+          <li><a href="#cardapio"><span class="mm-num">02</span>Cardápio</a></li>
+          <li><a href="#chef"><span class="mm-num">03</span>Chef</a></li>
+          <li><a href="#ambiente"><span class="mm-num">04</span>Ambiente</a></li>
+          <li><a href="#reservas"><span class="mm-num">05</span>Reservas</a></li>
+          <li><a href="#contato"><span class="mm-num">06</span>Contato</a></li>
+        </ul>
+      </nav>
+      <div class="mobile-menu__foot">
+        <p>Ter a Dom · a partir das 18h30</p>
+        <a href="tel:+5511999999999">(11) 99999-9999</a>
       </div>
-    </section>
+    </div>
 
-    <section class="section__container explore__container">
-      <div class="explore__image">
-        <img src="assets/explore.png" alt="explore" />
-      </div>
-      <div class="explore__content">
-        <h1 class="section__header">Servimos Comida Saudável e Saborosa</h1>
-        <p class="section__description">
-          Delicie-se sem culpa com o nosso compromisso em servir refeições saudáveis e 
-          deliciosas. Explore um menu selecionado para equilibrar sabor e nutrição, 
-          garantindo que cada mordida seja satisfatória e nutritiva.
-        </p>
-        <div class="explore__btn">
-          <button class="btn">
-            Nossa História <span><i class="ri-arrow-right-line"></i></span>
-          </button>
-        </div>
-      </div>
-    </section>
+    <main id="conteudo">
+      <!-- ===== 4.3 HERO ===== -->
+      <section class="hero" id="inicio" aria-labelledby="hero-title">
+        <canvas class="hero__bokeh" id="bokeh" aria-hidden="true"></canvas>
+        <div class="hero__vignette" aria-hidden="true"></div>
 
-    <section class="section__container banner__container">
-      <div class="banner__card">
-        <span class="banner__icon"><i class="ri-bowl-fill"></i></span>
-        <h4>Peça Sua Comida</h4>
-        <p>
-          Faça seus pedidos de comida online com perfeição e com apenas alguns cliques. 
-          Desfrute de comodidade e eficiência ao escolher em nosso cardápio diversificado.
-        </p>
-        <a href="#">
-          Leia mais
-          <span><i class="ri-arrow-right-line"></i></span>
+        <div class="hero__stage">
+          <div class="hero__word-wrap" aria-hidden="true">
+            <span class="hero__script">Omakase</span>
+            <span class="hero__word">SUSHI</span>
+          </div>
+
+          <!-- Camada de trás: foto completa com máscara radial (funde ao fundo preto) -->
+          <div class="hero__dish" data-depth="0.6">
+            <picture class="hero__dish-back">
+              <source type="image/avif" srcset="assets/img/niguiri-salmao-macaricado-640.avif 640w, assets/img/niguiri-salmao-macaricado-696.avif 696w" sizes="(min-width: 1024px) 58vw, 100vw" />
+              <source type="image/webp" srcset="assets/img/niguiri-salmao-macaricado-640.webp 640w, assets/img/niguiri-salmao-macaricado-696.webp 696w" sizes="(min-width: 1024px) 58vw, 100vw" />
+              <img
+                src="assets/img/niguiri-salmao-macaricado-696.jpg"
+                width="696"
+                height="432"
+                fetchpriority="high"
+                decoding="async"
+                alt="Niguiri de salmão maçaricado com maionese e cebolinha, sobre madeira queimada em fundo preto"
+              />
+            </picture>
+            <!-- Camada da frente: recorte do niguiri, sobreposto às letras -->
+            <picture class="hero__dish-front" aria-hidden="true">
+              <source type="image/avif" srcset="assets/img/niguiri-salmao-macaricado-recorte-640.avif 640w, assets/img/niguiri-salmao-macaricado-recorte-696.avif 696w" sizes="(min-width: 1024px) 58vw, 100vw" />
+              <source type="image/webp" srcset="assets/img/niguiri-salmao-macaricado-recorte-640.webp 640w, assets/img/niguiri-salmao-macaricado-recorte-696.webp 696w" sizes="(min-width: 1024px) 58vw, 100vw" />
+              <img src="assets/img/niguiri-salmao-macaricado-recorte-696.png" width="696" height="432" alt="" decoding="async" />
+            </picture>
+          </div>
+        </div>
+
+        <div class="hero__content">
+          <h1 class="hero__title" id="hero-title">A arte do corte perfeito.</h1>
+          <p class="hero__sub">Peixe fresco <i>·</i> Técnica japonesa <i>·</i> Experiência única</p>
+          <div class="hero__actions">
+            <a href="#reservas" class="btn btn--light" data-cursor="Reservar">
+              <span>Reservar Mesa</span>
+              <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#i-arrow-right" /></svg>
+            </a>
+            <a href="#cardapio" class="link-arrow">Ver Cardápio</a>
+          </div>
+        </div>
+
+        <div class="glass-card hero__proof">
+          <div class="avatars" aria-hidden="true">
+            <span style="--h: 18">MA</span><span style="--h: 32">RT</span><span style="--h: 4">JL</span><span style="--h: 40">CS</span><span style="--h: 12">BF</span>
+          </div>
+          <div>
+            <p class="hero__proof-num">+5.000 clientes satisfeitos</p>
+            <p class="hero__proof-rate">
+              <svg class="icon icon--fill" aria-hidden="true"><use href="assets/icons.svg#i-star" /></svg>
+              4,9 no Google
+            </p>
+          </div>
+        </div>
+
+        <a href="#ambiente" class="glass-card hero__place" data-cursor="Ver">
+          <picture class="hero__place-thumb">
+            <source type="image/avif" srcset="assets/img/balcao-sakura-640.avif" />
+            <source type="image/webp" srcset="assets/img/balcao-sakura-640.webp" />
+            <img src="assets/img/balcao-sakura-640.jpg" width="640" height="853" alt="" loading="lazy" decoding="async" />
+          </picture>
+          <span class="hero__place-text">Uma experiência japonesa no coração da cidade</span>
+          <span class="hero__place-arrow"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#i-arrow-up-right" /></svg></span>
         </a>
-      </div>
-      <div class="banner__card">
-        <span class="banner__icon"><i class="ri-truck-fill"></i></span>
-        <h4>Escolha Sua Comida</h4>
-        <p>
-          Personalize a sua experiência gastronômica escolhendo entre uma variedade 
-          tentadora de opções. Seja para desejos salgados, doces ou algo no meio.
-        </p>
-        <a href="#">
-          Leia mais
-          <span><i class="ri-arrow-right-line"></i></span>
-        </a>
-      </div>
-      <div class="banner__card">
-        <span class="banner__icon"><i class="ri-star-smile-fill"></i></span>
-        <h4>Aproveite Sua Comida</h4>
-        <p>
-          Sente-se, relaxe e saboreie os sabores enquanto sua refeição meticulosamente 
-          preparada chega. Delicie-se com cada mordida, sabendo que a sua satisfação é a nossa prioridade.
-        </p>
-        <a href="#">
-          Leia mais
-          <span><i class="ri-arrow-right-line"></i></span>
-        </a>
-      </div>
-    </section>
 
-    <section class="chef" id="chef">
-      <img src="assets/topping.png" alt="topping" class="chef__bg" />
-      <div class="section__container chef__container">
-        <div class="chef__image">
-          <img src="assets/chef.png" alt="chef" />
+        <div class="hero__side" aria-hidden="true">
+          <span class="kanji-v">寿司</span>
+          <span class="hero__side-line"></span>
+          <span class="hero__side-txt">Est. 2014</span>
         </div>
-        <div class="chef__content">
-          <h2 class="section__header">Preparado Pelos Melhores Chefs Do Mundo</h2>
-          <p class="section__description">
-            Experimente a excelência culinária criada por chefs mestres de todo o 
-            mundo. Nossa equipe reúne experiência, inovação e paixão para criar 
-            experiências gastronômicas inesquecíveis.
-          </p>
-          <ul class="chef__list">
-            <li>
-              <span><i class="ri-checkbox-fill"></i></span>
-              Saboreie o brilhantismo culinário de chefs mestres de todo o mundo.
+
+        <a href="#filosofia" class="scroll-hint">
+          <span>Role para descobrir</span>
+          <span class="scroll-hint__line" aria-hidden="true"></span>
+        </a>
+      </section>
+
+      <!-- ===== 4.4 Marquee ===== -->
+      <div class="marquee" aria-hidden="true">
+        <div class="marquee__track">
+          <div class="marquee__group">
+            <span>Niguiri</span><b>✦</b><span class="o">Uramaki</span><b>✦</b><span>Sashimi</span><b>✦</b><span class="o">Temaki</span><b>✦</b><span>Omakase</span><b>✦</b>
+            <span class="o">Niguiri</span><b>✦</b><span>Uramaki</span><b>✦</b><span class="o">Sashimi</span><b>✦</b><span>Temaki</span><b>✦</b><span class="o">Omakase</span><b>✦</b>
+          </div>
+          <div class="marquee__group">
+            <span>Niguiri</span><b>✦</b><span class="o">Uramaki</span><b>✦</b><span>Sashimi</span><b>✦</b><span class="o">Temaki</span><b>✦</b><span>Omakase</span><b>✦</b>
+            <span class="o">Niguiri</span><b>✦</b><span>Uramaki</span><b>✦</b><span class="o">Sashimi</span><b>✦</b><span>Temaki</span><b>✦</b><span class="o">Omakase</span><b>✦</b>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== 4.5 Filosofia ===== -->
+      <section class="section about" id="filosofia" aria-labelledby="about-title">
+        <span class="kanji-bg kanji-bg--left" aria-hidden="true">匠</span>
+        <div class="container about__grid">
+          <div class="about__text">
+            <p class="eyebrow">Nossa filosofia</p>
+            <h2 class="title" id="about-title">
+              <span class="script" data-script>Tradição</span>
+              <span data-split>em cada detalhe</span>
+            </h2>
+            <p class="lead" data-lines>
+              Do mar para o seu prato, no mesmo dia. O peixe chega cedo e é cortado na hora, com a paciência que a técnica japonesa exige.
+            </p>
+            <p class="muted" data-lines>
+              O arroz é temperado a cada serviço, na temperatura do corpo, como manda o Edomae. Nada fica pronto antes de você chegar.
+            </p>
+            <ul class="stats">
+              <li><strong><span data-count="10">0</span><em>+</em></strong><span>anos de balcão</span></li>
+              <li><strong><span data-count="50">0</span><em>+</em></strong><span>peças no cardápio</span></li>
+              <li><strong><span data-count="5000" data-format="thousands">0</span><em>+</em></strong><span>clientes</span></li>
+            </ul>
+          </div>
+          <figure class="about__media img-reveal" data-reveal-img data-cursor="Ver">
+            <picture>
+              <source type="image/avif" srcset="assets/img/niguiri-salmao-macaricado-640.avif 640w, assets/img/niguiri-salmao-macaricado-696.avif 696w" sizes="(min-width: 1024px) 50vw, 100vw" />
+              <source type="image/webp" srcset="assets/img/niguiri-salmao-macaricado-640.webp 640w, assets/img/niguiri-salmao-macaricado-696.webp 696w" sizes="(min-width: 1024px) 50vw, 100vw" />
+              <img src="assets/img/niguiri-salmao-macaricado-696.jpg" width="696" height="432" loading="lazy" decoding="async" alt="Niguiri de salmão maçaricado, com a superfície levemente tostada, sobre tronco de madeira escura" />
+            </picture>
+            <figcaption>Salmão maçaricado <span>— assinatura da casa</span></figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <!-- ===== 4.6 Assinaturas do Chef (scroll horizontal pinado) ===== -->
+      <section class="signatures" id="chef" aria-labelledby="sig-title">
+        <div class="signatures__head container">
+          <div>
+            <p class="eyebrow">Assinaturas do chef</p>
+            <h2 class="title" id="sig-title"><span class="script" data-script>Criações</span><span data-split>que contam histórias</span></h2>
+          </div>
+          <p class="muted signatures__hint">Role para percorrer <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#i-arrow-right" /></svg></p>
+        </div>
+        <div class="signatures__viewport">
+          <ul class="signatures__track" role="list">
+            <li class="sig-card" data-cursor="Ver">
+              <span class="sig-card__num" aria-hidden="true">01</span>
+              <div class="sig-card__media">
+                <picture>
+                  <source type="image/avif" srcset="assets/img/niguiri-salmao-macaricado-640.avif 640w, assets/img/niguiri-salmao-macaricado-696.avif 696w" sizes="(min-width: 1024px) 46vw, 85vw" />
+                  <source type="image/webp" srcset="assets/img/niguiri-salmao-macaricado-640.webp 640w, assets/img/niguiri-salmao-macaricado-696.webp 696w" sizes="(min-width: 1024px) 46vw, 85vw" />
+                  <img src="assets/img/niguiri-salmao-macaricado-696.jpg" width="696" height="432" loading="lazy" decoding="async" alt="Niguiri de salmão maçaricado com cebolinha" />
+                </picture>
+              </div>
+              <div class="sig-card__body">
+                <h3>Salmão Maçaricado</h3>
+                <p>Barriga de salmão selada no maçarico, maionese de yuzu e cebolinha-francesa.</p>
+                <div class="sig-card__foot"><span class="price">R$ 28</span><span class="sig-card__more">Ver detalhes <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#i-arrow-right" /></svg></span></div>
+              </div>
             </li>
-            <li>
-              <span><i class="ri-checkbox-fill"></i></span>
-              Experimente criações inovadoras com atenção aos detalhes.
+            <li class="sig-card sig-card--tall" data-cursor="Ver">
+              <span class="sig-card__num" aria-hidden="true">02</span>
+              <div class="sig-card__media">
+                <picture>
+                  <source type="image/avif" srcset="assets/img/prato-detalhe-490.avif" />
+                  <source type="image/webp" srcset="assets/img/prato-detalhe-490.webp" />
+                  <img src="assets/img/prato-detalhe-490.jpg" width="490" height="700" loading="lazy" decoding="async" alt="Niguiris de salmão com gergelim preto e hossomakis com tobiko, vistos de cima" />
+                </picture>
+              </div>
+              <div class="sig-card__body">
+                <h3>Sake &amp; Tobiko</h3>
+                <p>Niguiris de salmão com gergelim negro intercalados a hossomakis de tobiko e avocado.</p>
+                <div class="sig-card__foot"><span class="price">R$ 64</span><span class="sig-card__more">Ver detalhes <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#i-arrow-right" /></svg></span></div>
+              </div>
             </li>
-            <li>
-              <span><i class="ri-checkbox-fill"></i></span>
-              Desfrute de pratos criados com uma paixão inabalável pela perfeição.
+            <li class="sig-card" data-cursor="Ver">
+              <span class="sig-card__num" aria-hidden="true">03</span>
+              <div class="sig-card__media">
+                <picture>
+                  <source type="image/avif" srcset="assets/img/prato-combinado-640.avif 640w, assets/img/prato-combinado-735.avif 735w" sizes="(min-width: 1024px) 46vw, 85vw" />
+                  <source type="image/webp" srcset="assets/img/prato-combinado-640.webp 640w, assets/img/prato-combinado-735.webp 735w" sizes="(min-width: 1024px) 46vw, 85vw" />
+                  <img src="assets/img/prato-combinado-735.jpg" width="735" height="1307" loading="lazy" decoding="async" class="pos-plate" alt="Prato de pedra preta com niguiris, hossomakis, gengibre em conserva, shoyu e hashis" />
+                </picture>
+              </div>
+              <div class="sig-card__body">
+                <h3>Combinado do Chef</h3>
+                <p>A seleção do dia em pedra vulcânica: niguiris, hossomakis, gari e shoyu da casa.</p>
+                <div class="sig-card__foot"><span class="price">R$ 129</span><span class="sig-card__more">Ver detalhes <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#i-arrow-right" /></svg></span></div>
+              </div>
+            </li>
+            <li class="sig-card sig-card--tall" data-cursor="Reservar">
+              <span class="sig-card__num" aria-hidden="true">04</span>
+              <div class="sig-card__media">
+                <picture>
+                  <source type="image/avif" srcset="assets/img/balcao-sakura-640.avif 640w, assets/img/balcao-sakura-736.avif 736w" sizes="(min-width: 1024px) 30vw, 85vw" />
+                  <source type="image/webp" srcset="assets/img/balcao-sakura-640.webp 640w, assets/img/balcao-sakura-736.webp 736w" sizes="(min-width: 1024px) 30vw, 85vw" />
+                  <img src="assets/img/balcao-sakura-736.jpg" width="736" height="981" loading="lazy" decoding="async" alt="Balcão de sushi iluminado com painéis de cerejeira e sushimen trabalhando" />
+                </picture>
+              </div>
+              <div class="sig-card__body">
+                <h3>Omakase no Balcão</h3>
+                <p>De 12 a 15 tempos escolhidos pelo itamae, servidos peça a peça na sua frente.</p>
+                <div class="sig-card__foot"><span class="price">R$ 390</span><a href="#omakase" class="sig-card__more">Conhecer <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#i-arrow-right" /></svg></a></div>
+              </div>
             </li>
           </ul>
         </div>
-      </div>
-    </section>
+        <div class="signatures__progress container" aria-hidden="true"><span></span></div>
+      </section>
 
-    <section class="section__container client__container" id="client">
-      <h2 class="section__header">O Que Nossos Clientes Estão Dizendo</h2>
-      <p class="section__description">
-        Descubra experiências em primeira mão e depoimentos de nossos valiosos clientes. 
-        Explore os comentários e avaliações que mostram nosso compromisso com a 
-        qualidade, serviço e satisfação.
-      </p>
-      <div class="client__swiper">
-        <!-- Slider main container -->
-        <div class="swiper">
-          <!-- Additional required wrapper -->
-          <div class="swiper-wrapper">
-            <!-- Slides -->
-            <div class="swiper-slide">
-              <div class="client__card">
-                <p>
-                  A experiência culinária do FoodMan nunca deixa de impressionar! Cada 
-                  prato é uma obra-prima, repleto de sabor e frescor.
-                </p>
-                <img src="assets/client-1.jpg" alt="client" />
-                <h4>David Lee</h4>
-                <h5>Executivo de Negócios</h5>
-              </div>
+      <!-- ===== 4.7 Destaque cinematográfico ===== -->
+      <section class="cinema" id="destaque" aria-labelledby="cinema-title">
+        <canvas class="cinema__smoke" id="smoke" aria-hidden="true"></canvas>
+        <div class="container cinema__grid">
+          <figure class="cinema__media">
+            <picture>
+              <source type="image/avif" srcset="assets/img/niguiri-salmao-macaricado-640.avif 640w, assets/img/niguiri-salmao-macaricado-696.avif 696w" sizes="(min-width: 1024px) 55vw, 100vw" />
+              <source type="image/webp" srcset="assets/img/niguiri-salmao-macaricado-640.webp 640w, assets/img/niguiri-salmao-macaricado-696.webp 696w" sizes="(min-width: 1024px) 55vw, 100vw" />
+              <img src="assets/img/niguiri-salmao-macaricado-696.jpg" width="696" height="432" loading="lazy" decoding="async" alt="Close do salmão maçaricado, com as marcas da chama na superfície" />
+            </picture>
+          </figure>
+          <div class="cinema__text">
+            <p class="eyebrow">Aburi · selado na chama</p>
+            <h2 class="cinema__title" id="cinema-title">
+              <span data-split>Quente.</span>
+              <span data-split>Delicado.</span>
+              <span data-split class="gold">Inesquecível.</span>
+            </h2>
+            <p class="muted" data-lines>Dois segundos de fogo. A gordura do salmão desperta, a superfície caramelizada encontra o arroz ainda morno.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== 4.8 Cardápio ===== -->
+      <section class="section menu" id="cardapio" aria-labelledby="menu-title">
+        <div class="container">
+          <div class="menu__head">
+            <p class="eyebrow">Cardápio</p>
+            <h2 class="title" id="menu-title"><span class="script" data-script>Sabores</span><span data-split>do mar japonês</span></h2>
+          </div>
+
+          <div class="tabs" role="tablist" aria-label="Categorias do cardápio">
+            <button class="tab" role="tab" id="tab-niguiris" aria-controls="menu-panel" aria-selected="true" data-cat="niguiris">Niguiris</button>
+            <button class="tab" role="tab" id="tab-uramakis" aria-controls="menu-panel" aria-selected="false" tabindex="-1" data-cat="uramakis">Uramakis</button>
+            <button class="tab" role="tab" id="tab-sashimis" aria-controls="menu-panel" aria-selected="false" tabindex="-1" data-cat="sashimis">Sashimis</button>
+            <button class="tab" role="tab" id="tab-temakis" aria-controls="menu-panel" aria-selected="false" tabindex="-1" data-cat="temakis">Temakis</button>
+            <button class="tab" role="tab" id="tab-quentes" aria-controls="menu-panel" aria-selected="false" tabindex="-1" data-cat="quentes">Quentes</button>
+            <button class="tab" role="tab" id="tab-combinados" aria-controls="menu-panel" aria-selected="false" tabindex="-1" data-cat="combinados">Combinados</button>
+            <span class="tabs__indicator" aria-hidden="true"></span>
+          </div>
+
+          <div class="menu__grid">
+            <div class="menu__panel" id="menu-panel" role="tabpanel" aria-labelledby="tab-niguiris" tabindex="0">
+              <!-- Itens renderizados via JS a partir de MENU (js/main.js). Fallback sem JS: -->
+              <ul class="menu-list">
+                <li class="menu-item"><div class="menu-item__row"><h3>Sake Aburi</h3><span class="dots"></span><span class="price">R$ 28</span></div><p>Salmão maçaricado, maionese de yuzu, cebolinha (2 un.)</p></li>
+                <li class="menu-item"><div class="menu-item__row"><h3>Sake</h3><span class="dots"></span><span class="price">R$ 22</span></div><p>Salmão fresco sobre arroz temperado (2 un.)</p></li>
+                <li class="menu-item"><div class="menu-item__row"><h3>Maguro</h3><span class="dots"></span><span class="price">R$ 32</span></div><p>Atum vermelho com toque de shoyu envelhecido (2 un.)</p></li>
+              </ul>
             </div>
-            <div class="swiper-slide">
-              <div class="client__card">
-                <p>
-                  Sempre recorro ao FoodMan para uma refeição rápida e deliciosa. O serviço 
-                  eficiente e as opções de dar água na boca nunca decepcionam!
-                </p>
-                <img src="assets/client-2.jpg" alt="client" />
-                <h4>Emily Johnson</h4>
-                <h5>Blogueira de Culinária</h5>
-              </div>
-            </div>
-            <div class="swiper-slide">
-              <div class="client__card">
-                <p>
-                  O FoodMan se tornou minha primeira opção para todas as minhas necessidades 
-                  de buffet. Sua atenção aos detalhes fazem de cada evento um sucesso.
-                </p>
-                <img src="assets/client-3.jpg" alt="client" />
-                <h4>Michael Thompson</h4>
-                <h5>Organizador de Eventos</h5>
-              </div>
+            <figure class="menu__media" aria-hidden="true">
+              <picture class="menu__img is-active" data-img="detalhe">
+                <source type="image/avif" srcset="assets/img/prato-detalhe-490.avif" />
+                <source type="image/webp" srcset="assets/img/prato-detalhe-490.webp" />
+                <img src="assets/img/prato-detalhe-490.jpg" width="490" height="700" loading="lazy" decoding="async" alt="" />
+              </picture>
+              <picture class="menu__img" data-img="combinado">
+                <source type="image/avif" srcset="assets/img/prato-combinado-640.avif 640w, assets/img/prato-combinado-735.avif 735w" sizes="40vw" />
+                <source type="image/webp" srcset="assets/img/prato-combinado-640.webp 640w, assets/img/prato-combinado-735.webp 735w" sizes="40vw" />
+                <img src="assets/img/prato-combinado-735.jpg" width="735" height="1307" loading="lazy" decoding="async" alt="" />
+              </picture>
+              <picture class="menu__img" data-img="niguiri">
+                <source type="image/avif" srcset="assets/img/niguiri-salmao-macaricado-696.avif" />
+                <source type="image/webp" srcset="assets/img/niguiri-salmao-macaricado-696.webp" />
+                <img src="assets/img/niguiri-salmao-macaricado-696.jpg" width="696" height="432" loading="lazy" decoding="async" alt="" />
+              </picture>
+              <figcaption class="menu__cap"><span id="menu-cap">Niguiris</span></figcaption>
+            </figure>
+          </div>
+
+          <div class="menu__foot">
+            <p class="muted"><svg class="icon icon--gold" aria-hidden="true"><use href="assets/icons.svg#i-chef-hat" /></svg> Recomendação do chef</p>
+            <a href="assets/cardapio.pdf" class="btn btn--ghost" download data-cursor="Baixar">
+              <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#i-download" /></svg>
+              <span>Baixar cardápio completo (PDF)</span>
+            </a>
+          </div>
+        </div>
+        <div class="menu-preview" aria-hidden="true"><img alt="" /></div>
+      </section>
+
+      <!-- ===== 4.9 Ambiente ===== -->
+      <section class="section ambient" id="ambiente" aria-labelledby="amb-title">
+        <svg class="branch branch--tr" aria-hidden="true"><use href="#branch" /></svg>
+        <canvas class="petals" id="petals" aria-hidden="true"></canvas>
+        <div class="container">
+          <div class="ambient__head">
+            <p class="eyebrow">O ambiente</p>
+            <h2 class="title" id="amb-title"><span class="script" data-script>Um refúgio</span><span data-split>japonês</span></h2>
+            <p class="muted" data-lines>Lanternas de papel, cerejeiras em flor e madeira escura. Um salão pensado para desacelerar.</p>
+          </div>
+          <div class="bento">
+            <button class="bento__item bento__item--tall" data-lightbox data-cursor="Ampliar" aria-label="Ampliar foto do salão com lanternas">
+              <picture>
+                <source type="image/avif" srcset="assets/img/salao-lanternas-640.avif 640w, assets/img/salao-lanternas-720.avif 720w" sizes="(min-width: 1024px) 40vw, 100vw" />
+                <source type="image/webp" srcset="assets/img/salao-lanternas-640.webp 640w, assets/img/salao-lanternas-720.webp 720w" sizes="(min-width: 1024px) 40vw, 100vw" />
+                <img src="assets/img/salao-lanternas-720.jpg" width="720" height="1280" loading="lazy" decoding="async" alt="Salão com lanternas japonesas, painéis de cerejeira, mesas com toalhas vermelhas e rosas" />
+              </picture>
+              <span class="bento__cap">Salão principal</span>
+            </button>
+            <button class="bento__item bento__item--wide" data-lightbox data-cursor="Ampliar" aria-label="Ampliar foto do balcão de sushi">
+              <picture>
+                <source type="image/avif" srcset="assets/img/balcao-sakura-640.avif 640w, assets/img/balcao-sakura-736.avif 736w" sizes="(min-width: 1024px) 55vw, 100vw" />
+                <source type="image/webp" srcset="assets/img/balcao-sakura-640.webp 640w, assets/img/balcao-sakura-736.webp 736w" sizes="(min-width: 1024px) 55vw, 100vw" />
+                <img src="assets/img/balcao-sakura-736.jpg" width="736" height="981" loading="lazy" decoding="async" alt="Balcão de sushi iluminado com painéis e teto de cerejeira em flor" />
+              </picture>
+              <span class="bento__cap">Balcão sakura</span>
+            </button>
+            <button class="bento__item bento__item--square" data-lightbox data-cursor="Ampliar" aria-label="Ampliar foto do letreiro iluminado">
+              <picture>
+                <source type="image/avif" srcset="assets/img/letreiro-logo-640.avif 640w, assets/img/letreiro-logo-736.avif 736w" sizes="(min-width: 1024px) 27vw, 100vw" />
+                <source type="image/webp" srcset="assets/img/letreiro-logo-640.webp 640w, assets/img/letreiro-logo-736.webp 736w" sizes="(min-width: 1024px) 27vw, 100vw" />
+                <img src="assets/img/letreiro-logo-736.jpg" width="736" height="736" loading="lazy" decoding="async" alt="Letreiro iluminado com sol vermelho, Monte Fuji, ondas e galho de cerejeira, escrito Sushi Japanese Restaurant" />
+              </picture>
+              <span class="bento__cap">Nossa marca</span>
+            </button>
+            <div class="bento__quote">
+              <p>“O silêncio do balcão também é tempero.”</p>
+              <span>— Itamae Kenji</span>
             </div>
           </div>
-          <!-- If we need pagination -->
-          <div class="swiper-pagination"></div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <footer class="footer" id="contact">
-      <div class="section__container footer__container">
-        <div class="footer__col">
-          <div class="logo footer__logo">
-            <a href="#">Food<span>man</span></a>
+      <!-- ===== 4.10 Omakase ===== -->
+      <section class="section omakase" id="omakase" aria-labelledby="omk-title">
+        <div class="container omakase__grid">
+          <figure class="omakase__media img-reveal" data-reveal-img>
+            <picture>
+              <source type="image/avif" srcset="assets/img/balcao-sakura-640.avif 640w, assets/img/balcao-sakura-736.avif 736w" sizes="(min-width: 1024px) 45vw, 100vw" />
+              <source type="image/webp" srcset="assets/img/balcao-sakura-640.webp 640w, assets/img/balcao-sakura-736.webp 736w" sizes="(min-width: 1024px) 45vw, 100vw" />
+              <img src="assets/img/balcao-sakura-736.jpg" width="736" height="981" loading="lazy" decoding="async" alt="Sushimen preparando peças no balcão, com bancos de madeira e painéis de sakura iluminados" />
+            </picture>
+          </figure>
+          <div class="omakase__text">
+            <p class="eyebrow">Experiência omakase</p>
+            <h2 class="title" id="omk-title"><span data-split>Sente-se no balcão.</span><span class="script script--inline" data-script>Deixe o chef escolher.</span></h2>
+            <ol class="steps">
+              <li class="step" data-fade>
+                <span class="step__icon"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#i-calendar" /></svg></span>
+                <div><h3>Escolha o dia</h3><p>Apenas 8 lugares por sessão, às 19h e às 21h30.</p></div>
+              </li>
+              <li class="step" data-fade>
+                <span class="step__icon"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#i-chef-hat" /></svg></span>
+                <div><h3>O chef prepara na sua frente</h3><p>Cada peça é moldada e servida no momento exato.</p></div>
+              </li>
+              <li class="step" data-fade>
+                <span class="step__icon"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#i-utensils-crossed" /></svg></span>
+                <div><h3>12 a 15 tempos</h3><p>Uma sequência que segue a estação e o melhor peixe do dia.</p></div>
+              </li>
+            </ol>
+            <a href="#reservas" class="btn btn--gold" data-omakase data-cursor="Reservar">
+              <span>Reservar Omakase</span>
+              <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#i-arrow-right" /></svg>
+            </a>
           </div>
-          <p class="section__description">
-            Embarque em uma jornada gastronômica com o FoodMan, onde cada mordida conta 
-            uma história e cada prato é feito com perfeição.
-          </p>
         </div>
+      </section>
+
+      <!-- ===== 4.11 Depoimentos ===== -->
+      <section class="section reviews" id="depoimentos" aria-labelledby="rev-title">
+        <div class="reviews__sun" aria-hidden="true"></div>
+        <div class="container">
+          <div class="reviews__head">
+            <div>
+              <p class="eyebrow">Depoimentos</p>
+              <h2 class="title" id="rev-title"><span class="script" data-script>Palavras</span><span data-split>de quem provou</span></h2>
+            </div>
+            <div class="reviews__controls">
+              <button class="icon-btn" id="rev-prev" aria-label="Depoimento anterior"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#i-chevron-left" /></svg></button>
+              <button class="icon-btn" id="rev-toggle" aria-label="Pausar rotação automática" aria-pressed="false"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#i-pause" /></svg></button>
+              <button class="icon-btn" id="rev-next" aria-label="Próximo depoimento"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#i-chevron-right" /></svg></button>
+            </div>
+          </div>
+          <div class="reviews__viewport" aria-roledescription="carrossel" aria-label="Depoimentos de clientes">
+            <ul class="reviews__track" id="reviews-track" aria-live="off">
+              <li class="review glass-card" aria-roledescription="slide" aria-label="1 de 4">
+                <div class="stars" aria-label="5 de 5 estrelas"><svg class="icon icon--fill" aria-hidden="true"><use href="assets/icons.svg#i-star" /></svg><svg class="icon icon--fill" aria-hidden="true"><use href="assets/icons.svg#i-star" /></svg><svg class="icon icon--fill" aria-hidden="true"><use href="assets/icons.svg#i-star" /></svg><svg class="icon icon--fill" aria-hidden="true"><use href="assets/icons.svg#i-star" /></svg><svg class="icon icon--fill" aria-hidden="true"><use href="assets/icons.svg#i-star" /></svg></div>
+                <blockquote>“O omakase foi uma aula. Cada peça chegou no tempo certo, com o arroz ainda morno. Melhor sushi que comi fora do Japão.”</blockquote>
+                <p class="review__who"><span class="avatar" style="--h: 18">MA</span><span><strong>Mariana A.</strong><small>Omakase no balcão</small></span></p>
+              </li>
+              <li class="review glass-card" aria-roledescription="slide" aria-label="2 de 4">
+                <div class="stars" aria-label="5 de 5 estrelas"><svg class="icon icon--fill" aria-hidden="true"><use href="assets/icons.svg#i-star" /></svg><svg class="icon icon--fill" aria-hidden="true"><use href="assets/icons.svg#i-star" /></svg><svg class="icon icon--fill" aria-hidden="true"><use href="assets/icons.svg#i-star" /></svg><svg class="icon icon--fill" aria-hidden="true"><use href="assets/icons.svg#i-star" /></svg><svg class="icon icon--fill" aria-hidden="true"><use href="assets/icons.svg#i-star" /></svg></div>
+                <blockquote>“O salmão maçaricado derrete. Ambiente lindo, atendimento atento sem ser invasivo. Já virou nosso lugar de aniversário.”</blockquote>
+                <p class="review__who"><span class="avatar" style="--h: 32">RT</span><span><strong>Rafael T.</strong><small>Jantar a dois</small></span></p>
+              </li>
+              <li class="review glass-card" aria-roledescription="slide" aria-label="3 de 4">
+                <div class="stars" aria-label="5 de 5 estrelas"><svg class="icon icon--fill" aria-hidden="true"><use href="assets/icons.svg#i-star" /></svg><svg class="icon icon--fill" aria-hidden="true"><use href="assets/icons.svg#i-star" /></svg><svg class="icon icon--fill" aria-hidden="true"><use href="assets/icons.svg#i-star" /></svg><svg class="icon icon--fill" aria-hidden="true"><use href="assets/icons.svg#i-star" /></svg><svg class="icon icon--fill" aria-hidden="true"><use href="assets/icons.svg#i-star" /></svg></div>
+                <blockquote>“Peixe absurdamente fresco. Dá para sentir a diferença no primeiro niguiri. O combinado do chef vale cada centavo.”</blockquote>
+                <p class="review__who"><span class="avatar" style="--h: 4">JL</span><span><strong>Juliana L.</strong><small>Combinado do chef</small></span></p>
+              </li>
+              <li class="review glass-card" aria-roledescription="slide" aria-label="4 de 4">
+                <div class="stars" aria-label="5 de 5 estrelas"><svg class="icon icon--fill" aria-hidden="true"><use href="assets/icons.svg#i-star" /></svg><svg class="icon icon--fill" aria-hidden="true"><use href="assets/icons.svg#i-star" /></svg><svg class="icon icon--fill" aria-hidden="true"><use href="assets/icons.svg#i-star" /></svg><svg class="icon icon--fill" aria-hidden="true"><use href="assets/icons.svg#i-star" /></svg><svg class="icon icon--fill" aria-hidden="true"><use href="assets/icons.svg#i-star" /></svg></div>
+                <blockquote>“Sentamos no balcão e foi um espetáculo. As lanternas, as cerejeiras, o silêncio. Uma experiência, não só um jantar.”</blockquote>
+                <p class="review__who"><span class="avatar" style="--h: 40">CS</span><span><strong>Carlos S.</strong><small>Balcão sakura</small></span></p>
+              </li>
+            </ul>
+          </div>
+          <div class="reviews__dots" id="reviews-dots" aria-hidden="true"></div>
+        </div>
+      </section>
+
+      <!-- ===== 4.12 Reservas (diagonal) ===== -->
+      <section class="reserve" id="reservas" aria-labelledby="res-title">
+        <div class="reserve__bg" aria-hidden="true">
+          <div class="reserve__diag"></div>
+          <div class="reserve__mat"></div>
+        </div>
+        <div class="container reserve__grid">
+          <div class="reserve__text">
+            <p class="eyebrow eyebrow--light">Reservas</p>
+            <h2 class="title" id="res-title"><span class="script" data-script>Sua mesa</span><span data-split>espera por você</span></h2>
+            <p class="lead">Confirmamos sua reserva em até 1 hora, por WhatsApp ou ligação.</p>
+            <a class="btn btn--whatsapp" id="wa-reserve" href="https://wa.me/5511999999999?text=Ol%C3%A1!%20Gostaria%20de%20reservar%20uma%20mesa." target="_blank" rel="noopener">
+              <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#i-message-circle" /></svg>
+              <span>Reservar pelo WhatsApp</span>
+            </a>
+          </div>
+
+          <form class="reserve__form glass-card" id="reserve-form" novalidate>
+            <div class="form-success" id="form-success" role="status" aria-live="polite" hidden>
+              <svg class="form-success__icon" viewBox="0 0 52 52" aria-hidden="true">
+                <circle cx="26" cy="26" r="24" fill="none" stroke="currentColor" stroke-width="2" />
+                <path d="M15 27l7 7 15-16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              <h3>Pedido recebido!</h3>
+              <p id="form-success-msg">Entraremos em contato para confirmar.</p>
+              <button type="button" class="link-arrow" id="form-again">Fazer outra reserva</button>
+            </div>
+
+            <div class="form-fields">
+              <div class="field field--full">
+                <label for="f-name">Nome</label>
+                <input id="f-name" name="name" type="text" autocomplete="name" required minlength="3" aria-describedby="e-name" />
+                <p class="field__error" id="e-name"></p>
+              </div>
+              <div class="field">
+                <label for="f-phone">Telefone</label>
+                <input id="f-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required placeholder="(11) 90000-0000" aria-describedby="e-phone" />
+                <p class="field__error" id="e-phone"></p>
+              </div>
+              <div class="field">
+                <label for="f-people">Pessoas</label>
+                <select id="f-people" name="people" required aria-describedby="e-people">
+                  <option value="">Selecione</option>
+                  <option>1</option><option selected>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option value="9+">9 ou mais</option>
+                </select>
+                <p class="field__error" id="e-people"></p>
+              </div>
+              <div class="field">
+                <label for="f-date">Data</label>
+                <input id="f-date" name="date" type="date" required aria-describedby="e-date" />
+                <p class="field__error" id="e-date"></p>
+              </div>
+              <div class="field">
+                <label for="f-time">Horário</label>
+                <select id="f-time" name="time" required aria-describedby="e-time">
+                  <option value="">Selecione</option>
+                  <option>18:30</option><option>19:00</option><option>19:30</option><option>20:00</option><option>20:30</option><option>21:00</option><option>21:30</option><option>22:00</option>
+                </select>
+                <p class="field__error" id="e-time"></p>
+              </div>
+              <div class="field field--full">
+                <label for="f-notes">Observações <span class="optional">(opcional)</span></label>
+                <textarea id="f-notes" name="notes" rows="3" placeholder="Aniversário, restrições alimentares, preferência pelo balcão…"></textarea>
+              </div>
+              <button type="submit" class="btn btn--light btn--block" data-cursor="Enviar">
+                <span>Solicitar reserva</span>
+                <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#i-arrow-right" /></svg>
+              </button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <!-- ===== 4.13 Localização e contato ===== -->
+      <section class="section contact" id="contato" aria-labelledby="ct-title">
+        <div class="container contact__grid">
+          <div class="contact__map" data-reveal-img>
+            <!-- Mapa estilizado (SVG estático, sem dependências externas) -->
+            <svg class="map" viewBox="0 0 600 440" role="img" aria-label="Mapa estilizado com a localização do restaurante na Rua das Cerejeiras">
+              <rect width="600" height="440" fill="#100e0c" />
+              <g stroke="#2a2522" fill="none">
+                <path d="M-10 120 610 60M-10 300 610 250M80 -10l60 460M300 -10l-40 460M460 -10l70 460" stroke-width="14" />
+                <path d="M-10 200 610 160M-10 380 610 340M180 -10l40 460M380 -10 360 450M540 -10l20 460" stroke-width="6" />
+                <path d="M-10 30C150 60 220 0 340 20s200 40 270 10M0 420c120-30 240 10 360-20s180-10 240 0" stroke-width="4" />
+              </g>
+              <path d="M300 160 330 162 334 248 296 252Z" fill="#1d1916" />
+              <path d="M410 70c40 10 70 40 70 80s-40 60-70 50-40-40-30-80 10-55 30-50Z" fill="#14201a" />
+              <text x="60" y="112" fill="#6f6a66" font-size="11" font-family="Montserrat, sans-serif" letter-spacing="2" transform="rotate(-5 60 112)">AV. PAULISTA</text>
+              <text x="320" y="246" fill="#6f6a66" font-size="10" font-family="Montserrat, sans-serif" letter-spacing="2" transform="rotate(-5 320 246)">R. DAS CEREJEIRAS</text>
+              <g class="map__pin" transform="translate(316 206)">
+                <circle r="34" fill="var(--red)" opacity=".15" class="map__pulse" />
+                <circle r="16" fill="var(--red)" opacity=".3" />
+                <circle r="8" fill="var(--red)" />
+                <circle r="3" fill="#fff" />
+              </g>
+            </svg>
+          </div>
+          <div class="contact__info">
+            <p class="eyebrow">Localização</p>
+            <h2 class="title" id="ct-title"><span class="script" data-script>Visite-nos</span><span data-split>no coração da cidade</span></h2>
+            <address class="contact__addr">
+              <p><svg class="icon icon--gold" aria-hidden="true"><use href="assets/icons.svg#i-map-pin" /></svg> Rua das Cerejeiras, 120 — Jardins, São Paulo/SP</p>
+              <p><svg class="icon icon--gold" aria-hidden="true"><use href="assets/icons.svg#i-phone" /></svg> <a href="tel:+5511999999999">(11) 99999-9999</a></p>
+              <p><svg class="icon icon--gold" aria-hidden="true"><use href="assets/icons.svg#i-instagram" /></svg> <a href="https://instagram.com/" target="_blank" rel="noopener">@sushi.restaurante</a></p>
+            </address>
+            <table class="hours">
+              <caption class="sr-only">Horário de funcionamento</caption>
+              <tbody>
+                <tr><th scope="row">Segunda</th><td>Fechado</td></tr>
+                <tr><th scope="row">Terça a Quinta</th><td>18h30 – 23h</td></tr>
+                <tr><th scope="row">Sexta e Sábado</th><td>18h30 – 00h</td></tr>
+                <tr><th scope="row">Domingo</th><td>12h – 16h</td></tr>
+              </tbody>
+            </table>
+            <div class="contact__actions">
+              <a class="btn btn--light" href="https://www.google.com/maps/search/?api=1&amp;query=Rua+das+Cerejeiras+120+S%C3%A3o+Paulo" target="_blank" rel="noopener" data-cursor="Abrir">
+                <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#i-navigation" /></svg><span>Como chegar</span>
+              </a>
+              <a class="btn btn--ghost" href="tel:+5511999999999">
+                <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#i-phone" /></svg><span>Ligar</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ===== 4.14 Footer ===== -->
+    <footer class="footer">
+      <div class="container footer__grid">
+        <div class="footer__brand">
+          <a href="#inicio" class="brand" aria-label="Sushi Japanese Restaurant — voltar ao início">
+            <svg class="brand__mark" aria-hidden="true"><use href="#logo-mark" /></svg>
+            <span class="brand__text"><span class="brand__name">SUSHI</span><span class="brand__tag">Japanese Restaurant</span></span>
+          </a>
+          <p class="muted">Tradição japonesa em cada detalhe.</p>
+        </div>
+        <nav class="footer__col" aria-label="Rodapé">
+          <h3>Navegue</h3>
+          <a href="#cardapio">Cardápio</a><a href="#chef">Assinaturas</a><a href="#ambiente">Ambiente</a><a href="#reservas">Reservas</a>
+        </nav>
         <div class="footer__col">
-          <h4>Produtos</h4>
-          <ul class="footer__links">
-            <li><a href="#">Cardápio</a></li>
-            <li><a href="#">Especiais</a></li>
-            <li><a href="#">Ofertas de Refeições</a></li>
-            <li><a href="#">Opções de Buffet</a></li>
-            <li><a href="#">Ofertas Sazonais</a></li>
-          </ul>
+          <h3>Horários</h3>
+          <p>Ter–Qui · 18h30–23h</p><p>Sex–Sáb · 18h30–00h</p><p>Dom · 12h–16h</p>
         </div>
-        <div class="footer__col">
-          <h4>Informações</h4>
-          <ul class="footer__links">
-            <li><a href="#">Sobre Nós</a></li>
-            <li><a href="#">Fale Conosco</a></li>
-            <li><a href="#">Informações Nutricionais</a></li>
-            <li><a href="#">Informações sobre Alergênicos</a></li>
-          </ul>
-        </div>
-        <div class="footer__col">
-          <h4>Empresa</h4>
-          <ul class="footer__links">
-            <li><a href="#">Nossa História</a></li>
-            <li><a href="#">Carreiras</a></li>
-            <li><a href="#">Termos de Serviço</a></li>
-            <li><a href="#">Política de Privacidade</a></li>
-          </ul>
-        </div>
+        <form class="footer__col newsletter" id="newsletter" novalidate>
+          <h3><label for="nl-email">Receba o menu da estação</label></h3>
+          <div class="newsletter__row">
+            <input id="nl-email" type="email" autocomplete="email" placeholder="seu@email.com" required aria-describedby="nl-msg" />
+            <button class="icon-btn icon-btn--gold" aria-label="Assinar newsletter"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#i-arrow-right" /></svg></button>
+          </div>
+          <p class="newsletter__msg" id="nl-msg" aria-live="polite"></p>
+          <div class="socials">
+            <a class="icon-btn" href="https://instagram.com/" target="_blank" rel="noopener" aria-label="Instagram"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#i-instagram" /></svg></a>
+            <a class="icon-btn" href="https://wa.me/5511999999999" target="_blank" rel="noopener" aria-label="WhatsApp"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#i-message-circle" /></svg></a>
+            <a class="icon-btn" href="mailto:contato@sushirestaurante.com.br" aria-label="E-mail"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#i-mail" /></svg></a>
+          </div>
+        </form>
       </div>
-      <div class="footer__bar">
-        Copyright © 2024 Web Design Mastery. Todos os direitos reservados.
+      <div class="footer__word" aria-hidden="true"><span>SUSHI</span></div>
+      <div class="container footer__bottom">
+        <p>© <span id="year">2026</span> Sushi — Japanese Restaurant. Todos os direitos reservados.</p>
+        <p class="footer__kanji" aria-hidden="true">鮨 · 和</p>
       </div>
     </footer>
 
-    <script src="https://unpkg.com/scrollreveal"></script>
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script src="main.js"></script>
+    <!-- ===== 4.15 Elementos globais ===== -->
+    <a class="wa-float" href="https://wa.me/5511999999999?text=Ol%C3%A1!%20Gostaria%20de%20fazer%20uma%20reserva." target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
+      <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#i-message-circle" /></svg>
+      <span class="wa-float__tip" role="tooltip">Fale conosco</span>
+    </a>
+    <button class="to-top" id="to-top" aria-label="Voltar ao topo">
+      <svg class="to-top__ring" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="22" /><circle class="to-top__progress" cx="24" cy="24" r="22" /></svg>
+      <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#i-arrow-up" /></svg>
+    </button>
+    <a href="#reservas" class="mobile-cta btn btn--light">
+      <span>Reservar Mesa</span>
+      <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#i-arrow-right" /></svg>
+    </a>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Imagem ampliada" hidden>
+      <button class="icon-btn lightbox__close" id="lightbox-close" aria-label="Fechar imagem"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#i-x" /></svg></button>
+      <img class="lightbox__img" alt="" />
+      <p class="lightbox__cap"></p>
+    </div>
+
+    <!-- Motion: GSAP 3 + ScrollTrigger + SplitText + Lenis (servidos localmente) -->
+    <script src="assets/vendor/gsap.min.js" defer></script>
+    <script src="assets/vendor/ScrollTrigger.min.js" defer></script>
+    <script src="assets/vendor/SplitText.min.js" defer></script>
+    <script src="assets/vendor/lenis.min.js" defer></script>
+    <script src="js/menu-data.js" defer></script>
+    <script src="js/main.js" defer></script>
   </body>
 </html>
