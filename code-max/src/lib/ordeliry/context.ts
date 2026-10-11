@@ -125,7 +125,8 @@ export function buildSystemPrompt(input: OrdeliryContextInput): string {
     etapa: input.deal ? STAGE_LABEL[input.deal.etapa] : "fora do pipeline",
     dias_na_etapa: dias === null ? "—" : String(dias),
     exemplos_ganhos: input.wins?.length ? `\n${input.wins.map((w, i) => `### Ganho ${i + 1} (${nicheLabel(w.nicho)})\n${w.conversa}`).join("\n\n")}` : "(nenhum ainda)",
-    data_hora: now.toLocaleString("pt-BR", { timeZone: TZ, weekday: "long", dateStyle: undefined, day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" }),
+    // Resolução de hora (não minuto) para o prefixo do prompt continuar cacheável dentro da hora.
+    data_hora: `${now.toLocaleDateString("pt-BR", { timeZone: TZ, weekday: "long", day: "2-digit", month: "2-digit", year: "numeric" })}, por volta das ${now.toLocaleString("pt-BR", { timeZone: TZ, hour: "2-digit", hourCycle: "h23" })}h`,
     horario: `${h.dias.map((d) => diasSemana[d]).join(", ")} das ${h.inicio} às ${h.fim}`,
     tom: TOM_LABEL[profile.tom],
   };
