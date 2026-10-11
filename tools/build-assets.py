@@ -32,8 +32,6 @@ QUALITY = {"avif": 62, "webp": 82, "jpeg": 84}  # AVIF 62 ~ JPEG 85 visualmente
 IMAGES = {
     # recorte remove o texto e a marca d'água da arte original
     "niguiri-salmao-macaricado": ("niguiri-salmao-macaricado.jpg", (40, 200, 736, 632)),
-    "prato-combinado": ("prato-combinado.jpg", None),
-    "prato-detalhe": ("prato-combinado.jpg", (150, 260, 640, 960)),
     "balcao-sakura": ("balcao-sakura.jpg", None),
     "salao-lanternas": ("salao-lanternas.jpg", None),
     "letreiro-logo": ("letreiro-logo.jpg", None),
