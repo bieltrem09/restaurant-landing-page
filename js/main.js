@@ -26,11 +26,13 @@
 
   const IMG = {
     niguiri: "assets/img/niguiri-salmao-macaricado-640.webp",
-    detalhe: "assets/img/prato-detalhe-490.webp",
-    combinado: "assets/img/prato-combinado-640.webp",
     niguiris: "assets/img/menu-niguiris-640.webp",
     uramakis: "assets/img/menu-uramakis-640.webp",
+    sashimis: "assets/img/menu-sashimis-640.webp",
+    temakis: "assets/img/menu-temakis-640.webp",
+    quentes: "assets/img/salmao-pedra-640.webp",
     chef: "assets/img/combinado-chef-640.webp",
+    omakase: "assets/img/omakase-maos-640.webp",
   };
 
   let lenis = null;

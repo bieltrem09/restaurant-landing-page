@@ -27,32 +27,32 @@ window.MENU = {
   },
   sashimis: {
     label: "Sashimis",
-    img: "combinado",
+    img: "sashimis",
     items: [
-      { name: "Sashimi de Salmão", desc: "Cortes generosos da barriga e do lombo (8 fatias)", price: 54, thumb: "combinado" },
-      { name: "Sashimi de Atum", desc: "Atum vermelho, cortado na hora (8 fatias)", price: 64, thumb: "combinado" },
-      { name: "Usuzukuri de Peixe Branco", desc: "Fatias finíssimas com ponzu e momiji oroshi", price: 58, chef: true, thumb: "combinado" },
-      { name: "Trio do Mar", desc: "Salmão, atum e peixe branco do dia (12 fatias)", price: 82, thumb: "combinado" },
+      { name: "Sashimi de Salmão", desc: "Cortes generosos da barriga e do lombo (8 fatias)", price: 54, thumb: "sashimis" },
+      { name: "Sashimi de Atum", desc: "Atum vermelho, cortado na hora (8 fatias)", price: 64, thumb: "sashimis" },
+      { name: "Usuzukuri de Peixe Branco", desc: "Fatias finíssimas com ponzu e momiji oroshi", price: 58, chef: true, thumb: "sashimis" },
+      { name: "Trio do Mar", desc: "Salmão, atum e peixe branco do dia (12 fatias)", price: 82, thumb: "sashimis" },
     ],
   },
   temakis: {
     label: "Temakis",
-    img: "detalhe",
+    img: "temakis",
     items: [
-      { name: "Temaki Salmão", desc: "Salmão picado na faca, cebolinha e gergelim", price: 34, thumb: "detalhe" },
-      { name: "Temaki Aburi", desc: "Salmão maçaricado com maionese de yuzu", price: 38, chef: true, thumb: "niguiri" },
-      { name: "Temaki Tobiko", desc: "Salmão, avocado e ovas de tobiko", price: 40, thumb: "detalhe" },
-      { name: "Temaki Ebi", desc: "Camarão empanado, alface e molho spicy", price: 39, thumb: "combinado" },
+      { name: "Temaki Salmão", desc: "Salmão picado na faca, cebolinha e gergelim", price: 34, thumb: "temakis" },
+      { name: "Temaki Aburi", desc: "Salmão maçaricado com maionese de yuzu", price: 38, chef: true, thumb: "temakis" },
+      { name: "Temaki Tobiko", desc: "Salmão, avocado e ovas de tobiko", price: 40, thumb: "temakis" },
+      { name: "Temaki Ebi", desc: "Camarão empanado, alface e molho spicy", price: 39, thumb: "temakis" },
     ],
   },
   quentes: {
     label: "Quentes",
-    img: "niguiri",
+    img: "quentes",
     items: [
-      { name: "Salmão Aburi na Pedra", desc: "Lombo selado na chama, servido sobre pedra quente com tarê", price: 72, chef: true, thumb: "niguiri" },
-      { name: "Ebi Tempurá", desc: "Camarões em massa leve e crocante, molho tentsuyu (6 un.)", price: 58, thumb: "combinado" },
-      { name: "Gyoza", desc: "Pastéis japoneses de porco grelhados na chapa (6 un.)", price: 36, thumb: "combinado" },
-      { name: "Missoshiru", desc: "Caldo de missô, tofu, wakame e cebolinha", price: 18, thumb: "combinado" },
+      { name: "Salmão Aburi na Pedra", desc: "Lombo selado na chama, servido sobre pedra quente com tarê", price: 72, chef: true, thumb: "quentes" },
+      { name: "Ebi Tempurá", desc: "Camarões em massa leve e crocante, molho tentsuyu (6 un.)", price: 58, thumb: "quentes" },
+      { name: "Gyoza", desc: "Pastéis japoneses de porco grelhados na chapa (6 un.)", price: 36, thumb: "quentes" },
+      { name: "Missoshiru", desc: "Caldo de missô, tofu, wakame e cebolinha", price: 18, thumb: "quentes" },
     ],
   },
   combinados: {
@@ -61,8 +61,8 @@ window.MENU = {
     items: [
       { name: "Combinado do Chef", desc: "Seleção do dia em pedra vulcânica: niguiris, hossomakis e gari (20 peças)", price: 129, chef: true, thumb: "chef" },
       { name: "Combinado Sake", desc: "Só salmão: sashimis, niguiris e uramakis (24 peças)", price: 119, thumb: "chef" },
-      { name: "Barco para Dois", desc: "Sashimis, niguiris, uramakis e hossomakis (40 peças)", price: 229, thumb: "combinado" },
-      { name: "Omakase no Balcão", desc: "12 a 15 tempos escolhidos pelo itamae — somente com reserva", price: 390, chef: true, thumb: "niguiri" },
+      { name: "Barco para Dois", desc: "Sashimis, niguiris, uramakis e hossomakis (40 peças)", price: 229, thumb: "sashimis" },
+      { name: "Omakase no Balcão", desc: "12 a 15 tempos escolhidos pelo itamae — somente com reserva", price: 390, chef: true, thumb: "omakase" },
     ],
   },
 };

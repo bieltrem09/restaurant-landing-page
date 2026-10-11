@@ -1270,7 +1270,7 @@ picture img,
 }
 .cinema__media img {
   width: 100%;
-  aspect-ratio: 696 / 432;
+  aspect-ratio: 16 / 9;
   object-fit: cover;
 }
 .cinema__title {
@@ -1569,7 +1569,7 @@ picture img,
   aspect-ratio: 4 / 5;
 }
 .omakase__media img {
-  object-position: 50% 60%;
+  object-position: 45% 50%;
 }
 .steps {
   display: grid;

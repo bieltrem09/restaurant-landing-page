@@ -85,6 +85,38 @@
     "w": 1024,
     "h": 572
   },
+  "menu-sashimis": {
+    "widths": [
+      640,
+      1024
+    ],
+    "w": 1024,
+    "h": 572
+  },
+  "menu-temakis": {
+    "widths": [
+      640,
+      1024
+    ],
+    "w": 1024,
+    "h": 572
+  },
+  "salmao-pedra": {
+    "widths": [
+      640,
+      1024
+    ],
+    "w": 1024,
+    "h": 572
+  },
+  "omakase-maos": {
+    "widths": [
+      640,
+      1024
+    ],
+    "w": 1024,
+    "h": 572
+  },
   "hero-niguiri": {
     "widths": [
       1024,

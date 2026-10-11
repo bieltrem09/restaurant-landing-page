@@ -47,6 +47,10 @@ HD_IMAGES = {
     "combinado-chef": "combinado-chef.jpg",
     "menu-niguiris": "menu-niguiris.jpg",
     "menu-uramakis": "menu-uramakis.jpg",
+    "menu-sashimis": "menu-sashimis.jpg",
+    "menu-temakis": "menu-temakis.jpg",
+    "salmao-pedra": "salmao-pedra.jpg",
+    "omakase-maos": "omakase-maos.jpg",
 }
 HD_MAX = 2048
 
