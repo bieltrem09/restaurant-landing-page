@@ -146,7 +146,9 @@
     const tl = gsap.timeline({ defaults: { ease: "expo.out" }, onComplete: () => (heroScroll(), heroPointer()) });
 
     // 1. "SUSHI" sobe letra a letra (mask reveal)
-    tl.from(chars, { yPercent: 110, duration: 1.1, stagger: 0.06 }, 0)
+    // 0. Sol vermelho nasce atrás da palavra
+    tl.from(".hero__sun span", { scale: 0.55, autoAlpha: 0, duration: 1.6, ease: "expo.out" }, 0)
+      .from(chars, { yPercent: 110, duration: 1.1, stagger: 0.06 }, 0.05)
       // 2. Sushi entra de baixo com scale e blur
       .fromTo(
         dish,
@@ -166,7 +168,8 @@
       // 5. Cards de vidro deslizam dos cantos
       .from(".hero__proof", { x: -50, autoAlpha: 0, duration: 0.9, ease: "power3.out" }, 0.85)
       .from(".hero__place", { x: 50, autoAlpha: 0, duration: 0.9, ease: "power3.out" }, 0.9)
-      .from(".hero__side, .scroll-hint", { autoAlpha: 0, duration: 0.8, ease: "power2.out" }, 1.0);
+      .from(".hero__side, .scroll-hint", { autoAlpha: 0, duration: 0.8, ease: "power2.out" }, 1.0)
+      .from(".hero__tag", { x: -24, autoAlpha: 0, duration: 0.9, ease: "power3.out" }, 1.05);
     // 6. Bokeh já está flutuando (canvas)
   }
 
@@ -180,6 +183,8 @@
       .to(".hero__dish-back, .hero__dish-front", { yPercent: mobile ? -10 : -28, ease: "none" }, 0) // sobe mais rápido
       .to(".hero__dish-back img, .hero__dish-front img", { scale: 1.08, ease: "none" }, 0)
       .to("#bokeh", { yPercent: 18, ease: "none" }, 0)
+      .to(".hero__sun", { yPercent: mobile ? 15 : 30, ease: "none" }, 0) // sol desce devagar, atrás de tudo
+      .to(".hero__tag", { autoAlpha: 0, ease: "none" }, 0)
       .to(".hero__content, .hero__proof, .hero__place, .hero__side, .scroll-hint", { y: -60, autoAlpha: 0, ease: "none" }, 0);
   }
 
@@ -191,6 +196,8 @@
     const qy = layers.map((l) => gsap.quickTo(l, "y", { duration: 0.9, ease: "power3.out" }));
     const wx = gsap.quickTo(".hero__word", "x", { duration: 1.2, ease: "power3.out" });
     const bx = gsap.quickTo("#bokeh", "x", { duration: 1.4, ease: "power3.out" });
+    const sx = gsap.quickTo(".hero__sun span", "x", { duration: 1.6, ease: "power3.out" });
+    const sy = gsap.quickTo(".hero__sun span", "y", { duration: 1.6, ease: "power3.out" });
     hero.addEventListener("pointermove", (e) => {
       const nx = e.clientX / innerWidth - 0.5;
       const ny = e.clientY / innerHeight - 0.5;
@@ -198,6 +205,8 @@
       qy.forEach((f) => f(ny * 12));
       wx(nx * -10);
       bx(nx * -26);
+      sx(nx * -14);
+      sy(ny * -10);
     });
   }
 

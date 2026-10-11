@@ -7,14 +7,6 @@
     "w": 696,
     "h": 432
   },
-  "niguiri-salmao-macaricado-recorte": {
-    "widths": [
-      640,
-      696
-    ],
-    "w": 696,
-    "h": 432
-  },
   "prato-combinado": {
     "widths": [
       640,
@@ -53,5 +45,25 @@
     ],
     "w": 736,
     "h": 736
+  },
+  "hero-niguiri": {
+    "widths": [
+      1024,
+      1600,
+      2048,
+      2560
+    ],
+    "w": 2784,
+    "h": 1728
+  },
+  "hero-niguiri-recorte": {
+    "widths": [
+      1024,
+      1600,
+      2048,
+      2560
+    ],
+    "w": 2784,
+    "h": 1728
   }
 }

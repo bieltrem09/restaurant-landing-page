@@ -44,8 +44,8 @@
       rel="preload"
       as="image"
       type="image/avif"
-      imagesrcset="assets/img/niguiri-salmao-macaricado-640.avif 640w, assets/img/niguiri-salmao-macaricado-696.avif 696w"
-      imagesizes="(min-width: 1024px) 58vw, 100vw"
+      imagesrcset="assets/img/hero-niguiri-1024.avif 1024w, assets/img/hero-niguiri-1600.avif 1600w, assets/img/hero-niguiri-2048.avif 2048w, assets/img/hero-niguiri-2560.avif 2560w"
+      imagesizes="(min-width: 1440px) 52vw, (min-width: 1024px) 56vw, 118vw"
       fetchpriority="high"
     />
 
@@ -224,6 +224,8 @@
         <div class="hero__vignette" aria-hidden="true"></div>
 
         <div class="hero__stage">
+          <!-- Sol vermelho do logo: atrás da palavra, à frente do fundo da foto -->
+          <div class="hero__sun" aria-hidden="true"><span></span></div>
           <div class="hero__word-wrap" aria-hidden="true">
             <span class="hero__script">Omakase</span>
             <span class="hero__word">SUSHI</span>
@@ -232,12 +234,14 @@
           <!-- Camada de trás: foto completa com máscara radial (funde ao fundo preto) -->
           <div class="hero__dish" data-depth="0.6">
             <picture class="hero__dish-back">
-              <source type="image/avif" srcset="assets/img/niguiri-salmao-macaricado-640.avif 640w, assets/img/niguiri-salmao-macaricado-696.avif 696w" sizes="(min-width: 1024px) 58vw, 100vw" />
-              <source type="image/webp" srcset="assets/img/niguiri-salmao-macaricado-640.webp 640w, assets/img/niguiri-salmao-macaricado-696.webp 696w" sizes="(min-width: 1024px) 58vw, 100vw" />
+              <source type="image/avif" srcset="assets/img/hero-niguiri-1024.avif 1024w, assets/img/hero-niguiri-1600.avif 1600w, assets/img/hero-niguiri-2048.avif 2048w, assets/img/hero-niguiri-2560.avif 2560w" sizes="(min-width: 1440px) 52vw, (min-width: 1024px) 56vw, 118vw" />
+              <source type="image/webp" srcset="assets/img/hero-niguiri-1024.webp 1024w, assets/img/hero-niguiri-1600.webp 1600w, assets/img/hero-niguiri-2048.webp 2048w, assets/img/hero-niguiri-2560.webp 2560w" sizes="(min-width: 1440px) 52vw, (min-width: 1024px) 56vw, 118vw" />
               <img
-                src="assets/img/niguiri-salmao-macaricado-696.jpg"
-                width="696"
-                height="432"
+                src="assets/img/hero-niguiri-1600.jpg"
+                srcset="assets/img/hero-niguiri-1024.jpg 1024w, assets/img/hero-niguiri-1600.jpg 1600w, assets/img/hero-niguiri-2048.jpg 2048w, assets/img/hero-niguiri-2560.jpg 2560w"
+                sizes="(min-width: 1440px) 52vw, (min-width: 1024px) 56vw, 118vw"
+                width="2784"
+                height="1728"
                 fetchpriority="high"
                 decoding="async"
                 alt="Niguiri de salmão maçaricado com maionese e cebolinha, sobre madeira queimada em fundo preto"
@@ -245,15 +249,21 @@
             </picture>
             <!-- Camada da frente: recorte do niguiri, sobreposto às letras -->
             <picture class="hero__dish-front" aria-hidden="true">
-              <source type="image/avif" srcset="assets/img/niguiri-salmao-macaricado-recorte-640.avif 640w, assets/img/niguiri-salmao-macaricado-recorte-696.avif 696w" sizes="(min-width: 1024px) 58vw, 100vw" />
-              <source type="image/webp" srcset="assets/img/niguiri-salmao-macaricado-recorte-640.webp 640w, assets/img/niguiri-salmao-macaricado-recorte-696.webp 696w" sizes="(min-width: 1024px) 58vw, 100vw" />
-              <img src="assets/img/niguiri-salmao-macaricado-recorte-696.png" width="696" height="432" alt="" decoding="async" />
+              <source type="image/avif" srcset="assets/img/hero-niguiri-recorte-1024.avif 1024w, assets/img/hero-niguiri-recorte-1600.avif 1600w, assets/img/hero-niguiri-recorte-2048.avif 2048w, assets/img/hero-niguiri-recorte-2560.avif 2560w" sizes="(min-width: 1440px) 52vw, (min-width: 1024px) 56vw, 118vw" />
+              <source type="image/webp" srcset="assets/img/hero-niguiri-recorte-1024.webp 1024w, assets/img/hero-niguiri-recorte-1600.webp 1600w, assets/img/hero-niguiri-recorte-2048.webp 2048w, assets/img/hero-niguiri-recorte-2560.webp 2560w" sizes="(min-width: 1440px) 52vw, (min-width: 1024px) 56vw, 118vw" />
+              <img src="assets/img/hero-niguiri-recorte-1024.png" width="2784" height="1728" alt="" decoding="async" />
             </picture>
+            <!-- Anotação editorial apontando para a peça -->
+            <p class="hero__tag" aria-hidden="true">
+              <span class="hero__tag-num">Nº 01</span>
+              <span class="hero__tag-name">Sake Aburi</span>
+              <span class="hero__tag-desc">Salmão maçaricado · yuzu</span>
+            </p>
           </div>
         </div>
 
         <div class="hero__content">
-          <h1 class="hero__title" id="hero-title">A arte do corte perfeito.</h1>
+          <h1 class="hero__title" id="hero-title">A arte do<br /><em>corte perfeito.</em></h1>
           <p class="hero__sub">Peixe fresco <i>·</i> Técnica japonesa <i>·</i> Experiência única</p>
           <div class="hero__actions">
             <a href="#reservas" class="btn btn--light" data-cursor="Reservar">

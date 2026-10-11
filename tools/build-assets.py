@@ -86,6 +86,39 @@ def niguiri_cutout(img):
     return out
 
 
+def build_hero():
+    """Hero em 2K: usa a foto ampliada 4x por IA (Real-ESRGAN x4plus).
+
+    A máscara do recorte é calculada na resolução original (mais estável) e
+    ampliada com suavização, então aplicada sobre a foto em alta resolução.
+    """
+    hi_src = SRC / "niguiri-salmao-macaricado@4x.jpg"
+    if not hi_src.exists():
+        return {}
+    box = IMAGES["niguiri-salmao-macaricado"][1]
+    hi = Image.open(hi_src).convert("RGB").crop(tuple(v * 4 for v in box))
+    lo = Image.open(SRC / IMAGES["niguiri-salmao-macaricado"][0]).convert("RGB").crop(box)
+    alpha = niguiri_cutout(lo).getchannel("A").resize(hi.size, Image.LANCZOS)
+    alpha = alpha.filter(ImageFilter.GaussianBlur(2.2))
+    cut = hi.convert("RGBA")
+    cut.putalpha(alpha)
+    out = {}
+    for name, img, is_alpha in (("hero-niguiri", hi, False), ("hero-niguiri-recorte", cut, True)):
+        meta = []
+        for w in (1024, 1600, 2048, 2560):
+            im = img.resize((w, round(img.height * w / img.width)), Image.LANCZOS)
+            im.save(OUT / f"{name}-{w}.avif", quality=60)
+            im.save(OUT / f"{name}-{w}.webp", quality=84, method=6)
+            if is_alpha:
+                if w == 1024:  # fallback PNG só na menor largura (peso)
+                    im.save(OUT / f"{name}-{w}.png", optimize=True)
+            else:
+                im.save(OUT / f"{name}-{w}.jpg", quality=86, optimize=True, progressive=True)
+            meta.append(w)
+        out[name] = {"widths": meta, "w": img.width, "h": img.height}
+    return out
+
+
 def build_icons(lucide_dir):
     names = ["arrow-right", "arrow-up-right", "arrow-up", "menu", "x", "star", "chef-hat",
              "map-pin", "phone", "instagram", "message-circle", "clock", "calendar", "users",
@@ -110,14 +143,13 @@ def main():
         if box:
             img = img.crop(box)
         manifest[name] = save_all(img, name)
-        if name == "niguiri-salmao-macaricado":
-            manifest[name + "-recorte"] = save_all(niguiri_cutout(img), name + "-recorte", alpha=True)
     # imagem de compartilhamento (Open Graph) 1200x630, fundo preto
     og = Image.new("RGB", (1200, 630), (10, 9, 8))
     hero = Image.open(SRC / "niguiri-salmao-macaricado.jpg").convert("RGB").crop((40, 200, 736, 632))
     hero = hero.resize((1015, 630), Image.LANCZOS)
     og.paste(hero, ((1200 - 1015) // 2, 0))
     og.save(OUT / "og-image.jpg", quality=85, optimize=True)
+    manifest.update(build_hero())
     (OUT / "manifest.json").write_text(json.dumps(manifest, indent=2))
     if len(sys.argv) > 1:
         build_icons(sys.argv[1])

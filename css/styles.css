@@ -789,6 +789,30 @@ picture img,
   justify-items: center;
   isolation: isolate; /* camadas: foto (0) < palavra (1) < recorte (2) */
 }
+/* Sol vermelho (motivo do logo) — fica entre o fundo da foto e a palavra */
+.hero__sun {
+  --sun: min(78vw, 360px);
+  position: absolute;
+  left: 50%;
+  top: calc(var(--sun) * -0.08);
+  width: var(--sun);
+  aspect-ratio: 1;
+  margin-left: calc(var(--sun) / -2);
+  z-index: 0;
+  pointer-events: none;
+}
+.hero__sun span {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 38% 30%, rgba(255, 120, 110, 0.35), transparent 45%),
+    radial-gradient(circle at 50% 50%, #d4142f 0%, var(--red) 55%, #86091d 100%);
+  box-shadow: 0 0 120px 10px rgba(200, 16, 46, 0.35), 0 0 260px 60px rgba(200, 16, 46, 0.12);
+  /* dissolve na base para revelar o tronco de madeira */
+  -webkit-mask-image: linear-gradient(180deg, #000 52%, rgba(0, 0, 0, 0.35) 78%, transparent 96%);
+  mask-image: linear-gradient(180deg, #000 52%, rgba(0, 0, 0, 0.35) 78%, transparent 96%);
+}
 .hero__word-wrap {
   position: relative;
   display: grid;
@@ -837,6 +861,15 @@ picture img,
   aspect-ratio: 696 / 432;
   margin-top: -18vw;
 }
+/* brilho quente sob a peça */
+.hero__dish::before {
+  content: "";
+  position: absolute;
+  inset: 18% 14% 10%;
+  z-index: -1;
+  background: radial-gradient(closest-side, rgba(242, 107, 58, 0.22), rgba(201, 162, 74, 0.08) 55%, transparent);
+  filter: blur(20px);
+}
 /* Camada de trás: abaixo da palavra, funde ao fundo com máscara radial */
 .hero__dish-back {
   position: absolute;
@@ -869,6 +902,14 @@ picture img,
   margin-top: 1rem;
   display: grid;
   justify-items: center;
+}
+.hero__title em {
+  font-style: italic;
+  color: var(--gold-soft);
+}
+/* anotação editorial (desktop) */
+.hero__tag {
+  display: none;
 }
 .hero__title {
   font-family: var(--f-serif);
@@ -2190,6 +2231,58 @@ picture img,
   }
   .hero__word {
     font-size: clamp(10rem, 21vw, 22rem);
+  }
+  .hero__sun {
+    --sun: clamp(340px, 30vw, 620px);
+    top: calc(var(--header-h) + 3svh + clamp(1.2rem, 2.2vw, 3rem));
+  }
+  .hero__tag {
+    position: absolute;
+    z-index: 3;
+    left: -4%;
+    top: 60%;
+    display: grid;
+    gap: 0.15rem;
+    padding-right: 4.5rem;
+    line-height: 1.2;
+  }
+  /* linha fina dourada apontando para a peça */
+  .hero__tag::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 0.55rem;
+    width: 4rem;
+    height: 1px;
+    background: linear-gradient(90deg, var(--gold), rgba(201, 162, 74, 0.2));
+  }
+  .hero__tag::before {
+    content: "";
+    position: absolute;
+    right: -4px;
+    top: calc(0.55rem - 3.5px);
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--gold-soft);
+    box-shadow: 0 0 0 4px rgba(230, 199, 122, 0.18);
+  }
+  .hero__tag-num {
+    font-size: 0.62rem;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+  }
+  .hero__tag-name {
+    font-family: var(--f-serif);
+    font-style: italic;
+    font-size: 1.5rem;
+  }
+  .hero__tag-desc {
+    font-size: 0.62rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--text-muted);
   }
   .hero__script {
     font-size: clamp(3.5rem, 5.5vw, 6.2rem);
