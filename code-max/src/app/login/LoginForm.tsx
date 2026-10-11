@@ -16,9 +16,24 @@ function explain(e: { message: string; code?: string }): string {
   if (e.code === "user_already_exists" || m.includes("already registered")) return "Este e-mail já tem conta. Use “Entrar” ou “Esqueci a senha”.";
   if (e.code === "weak_password" || m.includes("password should")) return "Senha fraca. Use pelo menos 8 caracteres, misturando letras e números.";
   if (m.includes("provider is not enabled") || m.includes("unsupported provider")) return "O login com Google ainda não foi ativado no Supabase (Authentication → Providers → Google). Por enquanto, use e-mail e senha.";
-  if (e.code === "over_email_send_rate_limit" || m.includes("rate limit")) return "Muitas tentativas seguidas. Espere alguns minutos e tente de novo.";
+  if (e.code === "email_address_invalid" || m.includes("is invalid")) return "Este e-mail não é válido. Confira se está escrito certo (ex.: @gmail.com).";
+  if (e.code === "over_email_send_rate_limit" || m.includes("rate limit")) return "Muitas tentativas seguidas: o Supabase limitou o envio de e-mails. Espere cerca de 1 hora ou peça para desativar a confirmação por e-mail.";
   if (m.includes("signups not allowed")) return "Cadastro de novos usuários desativado no Supabase.";
   return e.message;
+}
+
+const DOMAIN_TYPOS: Record<string, string> = {
+  "gmal.com": "gmail.com", "gmial.com": "gmail.com", "gmai.com": "gmail.com", "gamil.com": "gmail.com", "gmail.co": "gmail.com", "gmail.con": "gmail.com", "gnail.com": "gmail.com",
+  "hotmal.com": "hotmail.com", "hotmai.com": "hotmail.com", "hotmail.con": "hotmail.com", "outlok.com": "outlook.com", "outloo.com": "outlook.com",
+  "yaho.com": "yahoo.com", "yahoo.con": "yahoo.com", "yahoo.com.b": "yahoo.com.br", "icloud.con": "icloud.com",
+};
+
+/** Sugere a correção quando o domínio parece digitado errado (ex.: gmal.com → gmail.com). */
+export function emailTypo(email: string): string | null {
+  const [user, domain] = email.trim().toLowerCase().split("@");
+  if (!user || !domain) return null;
+  const fix = DOMAIN_TYPOS[domain];
+  return fix ? `${user}@${fix}` : null;
 }
 
 export function LoginForm() {
@@ -42,6 +57,12 @@ export function LoginForm() {
     setUnconfirmed(false);
     const sb = supabaseBrowser();
     const mail = email.trim().toLowerCase();
+    const typo = emailTypo(mail);
+    if (typo) {
+      setBusy(false);
+      setEmail(typo);
+      return setMsg(`Parece que o e-mail estava errado. Corrigimos para ${typo} — confira e clique de novo.`);
+    }
     try {
       if (mode === "esqueci") {
         const { error } = await sb.auth.resetPasswordForEmail(mail, { redirectTo: callback("/redefinir-senha") });

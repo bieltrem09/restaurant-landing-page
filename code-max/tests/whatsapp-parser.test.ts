@@ -47,3 +47,13 @@ describe("link do WhatsApp", () => {
     expect(waLink("(11) 98765-4321", "Olá, tudo bem?")).toBe("https://wa.me/5511987654321?text=Ol%C3%A1%2C%20tudo%20bem%3F");
   });
 });
+
+import { emailTypo } from "@/app/login/LoginForm";
+
+describe("correção de e-mail no login", () => {
+  it("corrige domínios digitados errado", () => {
+    expect(emailTypo("bielj009s@gmal.com")).toBe("bielj009s@gmail.com");
+    expect(emailTypo("Fulano@Hotmal.com")).toBe("fulano@hotmail.com");
+    expect(emailTypo("bielj009s@gmail.com")).toBeNull();
+  });
+});
