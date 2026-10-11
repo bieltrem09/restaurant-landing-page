@@ -404,7 +404,7 @@ export function Dashboard({ data, compare, from, to }: { data: DashboardData; co
           </header>
           {data.followups.length ? (
             data.followups.slice(0, 7).map((f) => {
-              const late = new Date(f.vence_em) < new Date(new Date(data.now).setHours(0, 0, 0, 0));
+              const late = f.atrasado;
               return (
                 <div key={`${f.kind}-${f.id}`} className="ag" style={{ gridTemplateColumns: "minmax(0,1fr) auto", cursor: "default" }}>
                   <button type="button" onClick={() => f.lead_id && openLead(f.lead_id)} style={{ textAlign: "left", minWidth: 0 }}>

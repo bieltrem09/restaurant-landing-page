@@ -73,8 +73,10 @@ export async function loadDashboard(sb: SupabaseClient, opts: { period: Period; 
   const followups = [
     ...(tasksQ.data ?? []).map((t) => ({ kind: "task" as const, id: t.id, titulo: t.titulo, mensagem: t.mensagem, vence_em: t.vence_em, lead_id: t.lead_id, lead: one(t.leads as Rel<{ nome: string; telefone: string | null }>) })),
     ...(overdueDealsQ.data ?? []).map((d) => ({ kind: "deal" as const, id: d.id, titulo: `Follow-up (${d.etapa})`, mensagem: null, vence_em: d.proximo_followup_em!, lead_id: d.lead_id, lead: one(d.leads as Rel<{ nome: string; telefone: string | null }>) })),
-  ].sort((a, b) => a.vence_em.localeCompare(b.vence_em));
-  const atrasados = followups.filter((f) => new Date(f.vence_em).getTime() < startToday).length;
+  ]
+    .sort((a, b) => a.vence_em.localeCompare(b.vence_em))
+    .map((f) => ({ ...f, atrasado: new Date(f.vence_em).getTime() < startToday }));
+  const atrasados = followups.filter((f) => f.atrasado).length;
 
   return {
     now: now.toISOString(),
