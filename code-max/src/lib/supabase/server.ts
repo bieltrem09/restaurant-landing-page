@@ -24,6 +24,7 @@ export async function supabaseServer() {
 
 /** Cliente service role: ignora RLS. Só para rotas públicas (rastreamento, páginas /d e /p), cron e workers. */
 export function supabaseAdmin() {
+  if (!process.env.SUPABASE_SERVICE_ROLE_KEY) throw new Error("SUPABASE_SERVICE_ROLE_KEY não configurada na Vercel.");
   return createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!, {
     auth: { persistSession: false, autoRefreshToken: false },
   });

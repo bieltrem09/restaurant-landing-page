@@ -2,7 +2,7 @@ import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 import { missingEnv } from "@/lib/config";
 
-const PUBLIC = [/^\/login/, /^\/auth\//, /^\/d\//, /^\/p\//, /^\/privacidade/, /^\/t\.js/, /^\/api\/track/, /^\/api\/cron\//];
+const PUBLIC = [/^\/configuracao/, /^\/login/, /^\/auth\//, /^\/d\//, /^\/p\//, /^\/privacidade/, /^\/t\.js/, /^\/api\/track/, /^\/api\/cron\//];
 
 /** Renova a sessão do Supabase e manda quem não está logado para /login. */
 export async function proxy(request: NextRequest) {

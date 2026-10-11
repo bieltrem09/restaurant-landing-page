@@ -1,5 +1,6 @@
 import "server-only";
 import type { SupabaseClient } from "@supabase/supabase-js";
+import { redirect } from "next/navigation";
 import { cache } from "react";
 import { supabaseServer, requireUser } from "./supabase/server";
 import type { Deal, Interaction, Lead, LeadSignal, PlaybookEntry, PortfolioItem, Profile, Service, Task } from "./types";
@@ -7,7 +8,9 @@ import type { Deal, Interaction, Lead, LeadSignal, PlaybookEntry, PortfolioItem,
 export const getProfile = cache(async (): Promise<Profile> => {
   const user = await requireUser();
   const sb = await supabaseServer();
-  const { data } = await sb.from("profiles").select("*").eq("user_id", user.id).maybeSingle();
+  const { data, error } = await sb.from("profiles").select("*").eq("user_id", user.id).maybeSingle();
+  // Tabela inexistente: a migração ainda não foi rodada no Supabase.
+  if (error && (error.code === "PGRST205" || error.code === "42P01")) redirect("/configuracao?banco=1");
   if (data) return data as Profile;
   // Perfil ainda não criado (trigger ausente): cria vazio.
   const { data: created } = await sb.from("profiles").insert({ user_id: user.id }).select("*").single();
