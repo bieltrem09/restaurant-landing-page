@@ -8,3 +8,6 @@ grant all on all tables in schema public to service_role;
 grant all on all sequences in schema public to service_role;
 -- places_cache é só do servidor (service role).
 revoke all on table public.places_cache from authenticated;
+revoke all on table public.places_cache from anon;
+-- handle_new_user só deve rodar pelo trigger de cadastro, nunca via /rest/v1/rpc.
+revoke execute on function public.handle_new_user() from public, anon, authenticated;
