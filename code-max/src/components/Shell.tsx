@@ -36,9 +36,10 @@ export type ShellProps = {
   profile: { nome: string; estudio: string; whatsapp: string; tema: "system" | "light" | "dark" };
   goal: { meta: number; recebido: number; mesLabel: string };
   badges: { radar: number; pipeline: number };
+  authEnabled?: boolean;
 };
 
-export function Shell({ children, profile, goal, badges }: ShellProps) {
+export function Shell({ children, profile, goal, badges, authEnabled = false }: ShellProps) {
   const pathname = usePathname();
   const router = useRouter();
   const navRef = useRef<HTMLElement>(null);
@@ -193,9 +194,11 @@ export function Shell({ children, profile, goal, badges }: ShellProps) {
                 <b>{profile.estudio || profile.nome || "Seu estúdio"}</b>
                 <span>{profile.nome}</span>
               </div>
-              <button className="icon-btn" type="button" onClick={logout} aria-label="Sair" style={{ background: "var(--side-2)", borderColor: "var(--side-line)", color: "var(--side-mute)", width: 36, height: 36, minHeight: 36 }}>
-                <LogOut size={16} />
-              </button>
+              {authEnabled && (
+                <button className="icon-btn" type="button" onClick={logout} aria-label="Sair" style={{ background: "var(--side-2)", borderColor: "var(--side-line)", color: "var(--side-mute)", width: 36, height: 36, minHeight: 36 }}>
+                  <LogOut size={16} />
+                </button>
+              )}
             </div>
           </aside>
           <div className={`side-scrim${menuOpen ? " on" : ""}`} onClick={() => setMenuOpen(false)} aria-hidden />

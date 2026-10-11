@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import { Shell } from "@/components/Shell";
+import { AUTH_ENABLED } from "@/lib/config";
 import { getProfile } from "@/lib/data";
 import { monthName, periodRange, spParts } from "@/lib/dates";
 import { supabaseServer } from "@/lib/supabase/server";
@@ -21,6 +22,7 @@ export default async function AppLayout({ children }: LayoutProps<"/">) {
       profile={{ nome: profile.nome, estudio: profile.estudio, whatsapp: profile.whatsapp, tema: profile.tema }}
       goal={{ meta: Number(profile.meta_mensal), recebido, mesLabel: monthName(spParts(now).m) }}
       badges={{ radar: hot.count ?? 0, pipeline: open.count ?? 0 }}
+      authEnabled={AUTH_ENABLED}
     >
       {children}
     </Shell>

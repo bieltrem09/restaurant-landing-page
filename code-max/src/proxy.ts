@@ -1,6 +1,6 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
-import { missingEnv } from "@/lib/config";
+import { AUTH_ENABLED, missingEnv } from "@/lib/config";
 
 const PUBLIC = [/^\/configuracao/, /^\/login/, /^\/auth\//, /^\/d\//, /^\/p\//, /^\/privacidade/, /^\/t\.js/, /^\/api\/track/, /^\/api\/cron\//];
 
@@ -20,6 +20,11 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(to);
   }
   if (!url || !key) return response;
+  // Login desligado: abre direto no CRM.
+  if (!AUTH_ENABLED) {
+    if (path === "/login" || path === "/redefinir-senha") return NextResponse.redirect(new URL("/", request.url));
+    return response;
+  }
 
   const supabase = createServerClient(url, key, {
     cookies: {
