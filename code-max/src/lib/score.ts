@@ -191,3 +191,24 @@ export function instagramHandleFromUrl(uri: string): string | null {
   if (["p", "reel", "reels", "explore", "stories", "accounts", "tv"].includes(h)) return null;
   return `@${h}`;
 }
+
+/** Qual sinal (evidência) sustenta cada peso do score. */
+export const WEIGHT_SIGNAL: Record<WeightKey, string> = {
+  sem_site: "website",
+  so_rede_social: "website",
+  marketplace: "website",
+  site_fora_do_ar: "site_online",
+  pagespeed_lt50: "pagespeed",
+  pagespeed_50_69: "pagespeed",
+  nao_responsivo: "viewport",
+  sem_https: "https",
+  copyright_antigo: "copyright",
+  sem_whatsapp: "whatsapp_button",
+  nota_45: "rating",
+  nota_40_44: "rating",
+  avaliacoes_150: "rating_count",
+  avaliacoes_50_149: "rating_count",
+  instagram: "instagram",
+  ticket_alto: "nicho",
+  ticket_medio: "nicho",
+};

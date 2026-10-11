@@ -1,7 +1,7 @@
 import "server-only";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { NICHE_BY_KEY } from "./niches";
-import { classifyWebsite, computeScore, instagramHandleFromUrl, type LeadFacts, type WeightKey } from "./score";
+import { classifyWebsite, computeScore, instagramHandleFromUrl, WEIGHT_SIGNAL, type LeadFacts, type WeightKey } from "./score";
 import { copyrightYear, hasWhatsAppButton, instagramHandles, summarizePageSpeed, type PageSpeedSummary } from "./site-analysis";
 import type { Lead, Service } from "./types";
 
@@ -230,26 +230,6 @@ export async function runPageSpeed(url: string): Promise<PageSpeedSummary | null
 }
 
 // ---------------------------------------------------------------- sinais e score
-/** Qual sinal (evidência) sustenta cada peso do score. */
-export const WEIGHT_SIGNAL: Record<WeightKey, string> = {
-  sem_site: "website",
-  so_rede_social: "website",
-  marketplace: "website",
-  site_fora_do_ar: "site_online",
-  pagespeed_lt50: "pagespeed",
-  pagespeed_50_69: "pagespeed",
-  nao_responsivo: "viewport",
-  sem_https: "https",
-  copyright_antigo: "copyright",
-  sem_whatsapp: "whatsapp_button",
-  nota_45: "rating",
-  nota_40_44: "rating",
-  avaliacoes_150: "rating_count",
-  avaliacoes_50_149: "rating_count",
-  instagram: "instagram",
-  ticket_alto: "nicho",
-  ticket_medio: "nicho",
-};
 
 type SignalRow = { chave: string; valor_json: unknown; fonte: string; coletado_em: string };
 
