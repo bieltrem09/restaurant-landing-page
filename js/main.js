@@ -504,6 +504,77 @@
   }
 
   /* ---------------------------------------------------------
+     O Chef — porta shoji abre no scroll, depois o mestre se apresenta
+     --------------------------------------------------------- */
+  function chef() {
+    const stage = $(".chef__stage");
+    if (!stage || !hasGSAP || reduce) return;
+
+    // Entrada do texto (toca quando o shoji termina de abrir)
+    const nm = splitChars($(".chef__nm"));
+    const intro = gsap
+      .timeline({ paused: true })
+      .from(".chef__intro .eyebrow", { y: 20, autoAlpha: 0, duration: 0.6, ease: "power3.out" }, 0)
+      .fromTo(".chef__role", { clipPath: "inset(-30% 100% -30% -10%)" }, { clipPath: "inset(-30% -10% -30% -10%)", duration: 1, ease: "power2.inOut" }, 0.1)
+      .from(nm, { yPercent: 110, duration: 1.1, stagger: 0.07, ease: "expo.out" }, 0.2)
+      .from(".chef__quote", { x: -30, autoAlpha: 0, duration: 0.9, ease: "power3.out" }, 0.55)
+      // assinatura "escrita" à mão
+      .fromTo(".chef__sign", { clipPath: "inset(-30% 100% -30% -5%)" }, { clipPath: "inset(-30% -5% -30% -5%)", duration: 1.3, ease: "power2.inOut" }, 0.85)
+      .from(".chef__vkanji", { y: -24, autoAlpha: 0, duration: 0.9, ease: "power3.out" }, 0.6);
+
+    const mm = gsap.matchMedia();
+    mm.add("(min-width: 768px)", () => {
+      // Desktop: seção fica fixa enquanto as folhas deslizam
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: stage,
+          start: "top top",
+          end: "+=140%",
+          pin: true,
+          scrub: 1,
+          onUpdate: (self) => {
+            if (self.progress > 0.55 && !intro.isActive() && intro.progress() < 1) intro.play();
+            else if (self.progress < 0.25 && intro.progress() > 0) intro.reverse();
+          },
+        },
+      });
+      tl.to(".chef__hint", { autoAlpha: 0, duration: 0.1 }, 0)
+        // o kanji "respira" antes de partir ao meio
+        .to(".chef__shoji-kanji", { scale: 1.12, duration: 0.25, ease: "none" }, 0)
+        .to(".chef__shoji--l", { xPercent: -101, duration: 0.6, ease: "power2.inOut" }, 0.15)
+        .to(".chef__shoji--r", { xPercent: 101, duration: 0.6, ease: "power2.inOut" }, 0.15)
+        .fromTo(".chef__portrait", { scale: 1.25 }, { scale: 1, duration: 0.8, ease: "power2.out" }, 0.15)
+        .fromTo(".chef__veil", { opacity: 0.15 }, { opacity: 1, duration: 0.45, ease: "none" }, 0.45)
+        .to({}, { duration: 0.2 }); // respiro com o retrato aberto
+    });
+    mm.add("(max-width: 767px)", () => {
+      // Mobile: sem pin, as folhas abrem conforme a seção entra
+      gsap
+        .timeline({ scrollTrigger: { trigger: stage, start: "top 80%", end: "top 10%", scrub: 1 } })
+        .to(".chef__hint", { autoAlpha: 0, duration: 0.15 }, 0)
+        .to(".chef__shoji--l", { xPercent: -101, ease: "power2.inOut" }, 0)
+        .to(".chef__shoji--r", { xPercent: 101, ease: "power2.inOut" }, 0)
+        .fromTo(".chef__portrait", { scale: 1.2 }, { scale: 1, ease: "none" }, 0);
+      ScrollTrigger.create({ trigger: ".chef__intro", start: "top 88%", once: true, onEnter: () => intro.play() });
+    });
+
+    // Galeria: cortinas diagonais em sentidos opostos + parallax dentro do quadro
+    [
+      [".chef__kitchen", "polygon(0% 0%, 0% 0%, -25% 100%, -25% 100%)", "polygon(0% 0%, 125% 0%, 100% 100%, -25% 100%)"],
+      [".chef__tools", "polygon(100% 0%, 125% 0%, 125% 100%, 100% 100%)", "polygon(-25% 0%, 125% 0%, 125% 100%, 0% 100%)"],
+    ].forEach(([sel, from, to]) => {
+      const fig = $(sel);
+      const frame = $(".chef__frame", fig);
+      gsap
+        .timeline({ scrollTrigger: { trigger: fig, start: "top 82%" } })
+        .fromTo(frame, { clipPath: from }, { clipPath: to, duration: 1.4, ease: "power4.inOut", clearProps: "clipPath" })
+        .fromTo($("picture", frame), { scale: 1.3 }, { scale: 1, duration: 1.8, ease: "power3.out" }, 0)
+        .from($("figcaption", fig), { y: 16, autoAlpha: 0, duration: 0.7, ease: "power3.out" }, 0.9);
+      gsap.fromTo($("picture", frame), { yPercent: -6 }, { yPercent: 6, ease: "none", scrollTrigger: { trigger: fig, start: "top bottom", end: "bottom top", scrub: true } });
+    });
+  }
+
+  /* ---------------------------------------------------------
      4.6 Assinaturas — pin horizontal (desktop) / carrossel (mobile)
      --------------------------------------------------------- */
   function signatures() {
@@ -1119,6 +1190,7 @@
   counters();
   bokeh();
   marquee();
+  chef();
   signatures();
   cinema();
   ambient();

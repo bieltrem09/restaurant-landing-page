@@ -111,6 +111,30 @@
     "w": 1024,
     "h": 572
   },
+  "chef-retrato": {
+    "widths": [
+      640,
+      1024
+    ],
+    "w": 1024,
+    "h": 572
+  },
+  "chef-cozinha": {
+    "widths": [
+      640,
+      1024
+    ],
+    "w": 1024,
+    "h": 572
+  },
+  "chef-ferramentas": {
+    "widths": [
+      640,
+      1024
+    ],
+    "w": 1024,
+    "h": 572
+  },
   "hero-niguiri": {
     "widths": [
       1024,

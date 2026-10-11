@@ -49,6 +49,9 @@ HD_IMAGES = {
     "menu-temakis": "menu-temakis.jpg",
     "salmao-pedra": "salmao-pedra.jpg",
     "omakase-maos": "omakase-maos.jpg",
+    "chef-retrato": "chef-retrato.jpg",
+    "chef-cozinha": "chef-cozinha.jpg",
+    "chef-ferramentas": "chef-ferramentas.jpg",
 }
 HD_MAX = 2048
 

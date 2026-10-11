@@ -35,7 +35,7 @@ Dependências de runtime: nenhuma via CDN além do Google Fonts (Cormorant Garam
 
 ## Antes de publicar: troque os dados de exemplo
 
-Endereço, telefone, WhatsApp, Instagram, e-mail, horários, preços, números (anos, clientes, nota 4,9) e depoimentos são **exemplos** e precisam ser trocados pelos reais:
+Endereço, telefone, WhatsApp, Instagram, e-mail, horários, preços, números (anos, clientes, nota 4,9), depoimentos e a seção "O Chef" (nome, frase e trajetória do Itamae Kenji) são **exemplos** e precisam ser trocados pelos reais:
 
 - `index.html` — textos, links `wa.me/5511999999999`, `tel:`, endereço, horários e o JSON-LD (Schema.org) no `<head>`
 - `js/main.js` — constante `WHATSAPP` e `FORM_ENDPOINT`

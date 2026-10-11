@@ -36,7 +36,7 @@
     <!-- Kanji decorativos: subconjunto mínimo da fonte -->
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500&display=swap&text=%E5%AF%BF%E5%8F%B8%E5%8C%A0%E9%AE%A8%E6%A1%9C%E5%92%8C"
+      href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500&display=swap&text=%E5%AF%BF%E5%8F%B8%E5%8C%A0%E9%AE%A8%E6%A1%9C%E5%92%8C%E8%81%B7%E4%BA%BA"
     />
 
     <!-- LCP: imagem do hero -->
@@ -356,8 +356,70 @@
         </div>
       </section>
 
+      <!-- ===== O Chef — porta shoji que se abre no scroll ===== -->
+      <section class="chef" id="chef" aria-labelledby="chef-title">
+        <div class="chef__stage">
+          <figure class="chef__portrait">
+            <picture data-pic="chef-retrato" data-sizes="100vw">
+              <source type="image/avif" srcset="assets/img/chef-retrato-640.avif 640w, assets/img/chef-retrato-1024.avif 1024w" sizes="100vw" />
+              <source type="image/webp" srcset="assets/img/chef-retrato-640.webp 640w, assets/img/chef-retrato-1024.webp 1024w" sizes="100vw" />
+              <img src="assets/img/chef-retrato-1024.jpg" srcset="assets/img/chef-retrato-640.jpg 640w, assets/img/chef-retrato-1024.jpg 1024w" sizes="100vw" width="1024" height="572" loading="lazy" decoding="async" alt="Itamae de braços cruzados atrás do balcão de hinoki, com kimono preto e hachimaki branca, painel de cerejeira ao fundo" />
+            </picture>
+          </figure>
+          <div class="chef__veil" aria-hidden="true"></div>
+
+          <!-- painéis shoji: o kanji 匠 (mestre) é pintado sobre as duas folhas -->
+          <div class="chef__shoji chef__shoji--l" aria-hidden="true"><span class="chef__shoji-kanji">匠</span></div>
+          <div class="chef__shoji chef__shoji--r" aria-hidden="true"><span class="chef__shoji-kanji">匠</span></div>
+          <p class="chef__hint" aria-hidden="true">Role para abrir</p>
+
+          <div class="chef__intro">
+            <p class="eyebrow">O mestre por trás do balcão</p>
+            <h2 class="chef__name" id="chef-title">
+              <span class="chef__role">Itamae</span>
+              <span class="chef__nm">Kenji</span>
+            </h2>
+            <blockquote class="chef__quote">“O peixe escreve o cardápio. Eu só escuto.”</blockquote>
+            <p class="chef__sign" aria-hidden="true">Kenji</p>
+          </div>
+          <span class="chef__vkanji" aria-hidden="true">匠 · 職人</span>
+        </div>
+
+        <div class="container chef__story">
+          <div class="chef__text">
+            <p class="lead" data-lines>Trinta anos de balcão. Começou como aprendiz em Tóquio, lavando arroz por dois anos antes de tocar numa faca.</p>
+            <p class="muted" data-lines>Hoje escolhe o peixe na madrugada, tempera o arroz a cada serviço e desenha cada sequência omakase de acordo com a estação.</p>
+            <ul class="chef__facts">
+              <li><strong><span data-count="30">0</span></strong><span>anos de ofício</span></li>
+              <li><strong>Edomae</strong><span>escola de Tóquio</span></li>
+              <li><strong><span data-count="3">0</span></strong><span>facas, uma para cada corte</span></li>
+            </ul>
+          </div>
+          <figure class="chef__kitchen" data-cursor="Ver">
+            <div class="chef__frame">
+              <picture data-pic="chef-cozinha" data-sizes="(min-width: 1024px) 58vw, 100vw">
+                <source type="image/avif" srcset="assets/img/chef-cozinha-640.avif 640w, assets/img/chef-cozinha-1024.avif 1024w" sizes="(min-width: 1024px) 58vw, 100vw" />
+                <source type="image/webp" srcset="assets/img/chef-cozinha-640.webp 640w, assets/img/chef-cozinha-1024.webp 1024w" sizes="(min-width: 1024px) 58vw, 100vw" />
+                <img src="assets/img/chef-cozinha-1024.jpg" srcset="assets/img/chef-cozinha-640.jpg 640w, assets/img/chef-cozinha-1024.jpg 1024w" sizes="(min-width: 1024px) 58vw, 100vw" width="1024" height="572" loading="lazy" decoding="async" alt="Chef cortando um bloco de atum com faca yanagiba na cozinha, com vapor subindo do arroz ao fundo" />
+              </picture>
+            </div>
+            <figcaption><span>01</span> O corte do atum, antes do serviço</figcaption>
+          </figure>
+          <figure class="chef__tools" data-cursor="Ver">
+            <div class="chef__frame">
+              <picture data-pic="chef-ferramentas" data-sizes="(min-width: 1024px) 42vw, 100vw">
+                <source type="image/avif" srcset="assets/img/chef-ferramentas-640.avif 640w, assets/img/chef-ferramentas-1024.avif 1024w" sizes="(min-width: 1024px) 42vw, 100vw" />
+                <source type="image/webp" srcset="assets/img/chef-ferramentas-640.webp 640w, assets/img/chef-ferramentas-1024.webp 1024w" sizes="(min-width: 1024px) 42vw, 100vw" />
+                <img src="assets/img/chef-ferramentas-1024.jpg" srcset="assets/img/chef-ferramentas-640.jpg 640w, assets/img/chef-ferramentas-1024.jpg 1024w" sizes="(min-width: 1024px) 42vw, 100vw" width="1024" height="572" loading="lazy" decoding="async" alt="Mãos do chef sobre um pano branco ao lado de três facas japonesas forjadas e um hangiri de madeira" />
+              </picture>
+            </div>
+            <figcaption><span>02</span> Yanagiba, deba e usuba</figcaption>
+          </figure>
+        </div>
+      </section>
+
       <!-- ===== 4.6 Assinaturas do Chef (scroll horizontal pinado) ===== -->
-      <section class="signatures" id="chef" aria-labelledby="sig-title">
+      <section class="signatures" id="assinaturas" aria-labelledby="sig-title">
         <div class="signatures__head container">
           <div>
             <p class="eyebrow">Assinaturas do chef</p>
@@ -788,7 +850,7 @@
         </div>
         <nav class="footer__col" aria-label="Rodapé">
           <h3>Navegue</h3>
-          <a href="#cardapio">Cardápio</a><a href="#chef">Assinaturas</a><a href="#ambiente">Ambiente</a><a href="#reservas">Reservas</a>
+          <a href="#cardapio">Cardápio</a><a href="#chef">O Chef</a><a href="#assinaturas">Assinaturas</a><a href="#ambiente">Ambiente</a><a href="#reservas">Reservas</a>
         </nav>
         <div class="footer__col">
           <h3>Horários</h3>
