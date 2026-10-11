@@ -947,71 +947,54 @@
   });
 
   /* ---------------------------------------------------------
-     4.11 Depoimentos — carrossel acessível com autoplay pausável
+     4.11 Depoimentos — estilo "Unique Testimonial":
+     citação central troca com fade/blur, avatares viram pílula com o nome
      --------------------------------------------------------- */
   function reviews() {
-    const track = $("#reviews-track");
-    const slides = $$(".review", track);
-    const dots = $("#reviews-dots");
-    const btnToggle = $("#rev-toggle");
-    let i = 0;
-    let playing = !reduce;
-    let hoverPause = false;
-    let timer;
+    const box = $(".rv");
+    if (!box) return;
+    const pills = $$(".rv-pill", box);
+    const quote = $("#rv-quote");
+    const role = $("#rv-role");
+    let active = 0;
+    let busy = false;
 
-    slides.forEach(() => dots.appendChild(document.createElement("span")));
-
-    function go(n) {
-      i = (n + slides.length) % slides.length;
-      const gap = parseFloat(getComputedStyle(track).columnGap || getComputedStyle(track).gap) || 20;
-      const vpW = track.parentElement.clientWidth;
-      const slideW = slides[0].offsetWidth + gap;
-      const maxX = Math.max(0, track.scrollWidth - vpW);
-      track.style.transform = `translateX(${-Math.min(i * slideW, maxX)}px)`;
-      slides.forEach((s, k) => {
-        s.classList.toggle("is-dim", k !== i);
-        s.setAttribute("aria-hidden", k !== i);
+    function select(i, focus = false) {
+      if (i === active || busy) return;
+      busy = true;
+      pills.forEach((p, k) => {
+        p.classList.toggle("is-active", k === i);
+        p.setAttribute("aria-pressed", k === i);
       });
-      $$("span", dots).forEach((d, k) => d.classList.toggle("is-active", k === i));
+      if (focus) pills[i].focus();
+      const swap = () => {
+        quote.textContent = pills[i].dataset.quote;
+        role.textContent = pills[i].dataset.role;
+        active = i;
+        box.classList.remove("is-switching");
+        setTimeout(() => (busy = false), 400);
+      };
+      if (reduce) return swap();
+      box.classList.add("is-switching"); // sai com blur
+      setTimeout(swap, 220); // troca o texto no meio e volta nítido
     }
-    function schedule() {
-      clearInterval(timer);
-      if (playing && !hoverPause) timer = setInterval(() => go(i + 1), 6000);
-    }
-    function setPlaying(v) {
-      playing = v;
-      btnToggle.setAttribute("aria-pressed", !v);
-      btnToggle.setAttribute("aria-label", v ? "Pausar rotação automática" : "Retomar rotação automática");
-      $("use", btnToggle).setAttribute("href", `assets/icons.svg#i-${v ? "pause" : "play"}`);
-      track.setAttribute("aria-live", v ? "off" : "polite");
-      schedule();
-    }
-    $("#rev-prev").addEventListener("click", () => (go(i - 1), schedule()));
-    $("#rev-next").addEventListener("click", () => (go(i + 1), schedule()));
-    btnToggle.addEventListener("click", () => setPlaying(!playing));
-    const vp = track.parentElement;
-    vp.addEventListener("pointerenter", () => ((hoverPause = true), schedule()));
-    vp.addEventListener("pointerleave", () => ((hoverPause = false), schedule()));
-    vp.addEventListener("focusin", () => ((hoverPause = true), schedule()));
-    vp.addEventListener("focusout", () => ((hoverPause = false), schedule()));
-    $(".reviews").addEventListener("keydown", (e) => {
-      if (e.key === "ArrowRight") go(i + 1);
-      if (e.key === "ArrowLeft") go(i - 1);
-    });
-    // swipe
-    let sx = null;
-    vp.addEventListener("pointerdown", (e) => (sx = e.clientX));
-    vp.addEventListener("pointerup", (e) => {
-      if (sx === null) return;
-      const dx = e.clientX - sx;
-      if (Math.abs(dx) > 40) go(i + (dx < 0 ? 1 : -1));
-      sx = null;
-    });
-    addEventListener("resize", debounce(() => go(i), 150));
-    go(0);
-    setPlaying(playing);
 
-    if (hasGSAP && !reduce) gsap.from(vp, { y: 60, autoAlpha: 0, duration: 1, ease: "power3.out", scrollTrigger: { trigger: vp, start: "top 88%" } });
+    pills.forEach((p, i) => {
+      p.addEventListener("click", () => select(i));
+      p.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowRight") select((i + 1) % pills.length, true);
+        if (e.key === "ArrowLeft") select((i - 1 + pills.length) % pills.length, true);
+      });
+    });
+
+    if (hasGSAP && !reduce) {
+      gsap
+        .timeline({ scrollTrigger: { trigger: box, start: "top 85%" } })
+        .from(".rv .stars", { y: 16, autoAlpha: 0, duration: 0.6, ease: "power3.out" })
+        .from(".rv__quote-wrap", { y: 30, autoAlpha: 0, filter: "blur(8px)", duration: 1, ease: "power3.out", clearProps: "filter" }, 0.1)
+        .from(".rv__role", { y: 12, autoAlpha: 0, duration: 0.6, ease: "power3.out" }, 0.4)
+        .from(pills, { y: 20, autoAlpha: 0, stagger: 0.08, duration: 0.6, ease: "back.out(1.6)" }, 0.5);
+    }
   }
 
   /* ---------------------------------------------------------

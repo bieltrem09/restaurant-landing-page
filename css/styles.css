@@ -1872,7 +1872,7 @@ picture img,
   font-size: 0.92rem;
 }
 
-/* ---------- 16. Depoimentos ---------- */
+/* ---------- 16. Depoimentos — estilo "Unique Testimonial" ---------- */
 .reviews {
   overflow: hidden;
 }
@@ -1880,13 +1880,13 @@ picture img,
   position: absolute;
   width: min(70vw, 600px);
   aspect-ratio: 1;
-  right: -12vw;
-  top: 50%;
-  translate: 0 -50%;
+  left: 50%;
+  top: 58%;
+  translate: -50% -50%;
   border-radius: 50%;
   background: conic-gradient(from 0deg, var(--red), #8e0b20, var(--red), #e2323f, var(--red));
-  filter: blur(80px);
-  opacity: 0.3;
+  filter: blur(90px);
+  opacity: 0.22;
   animation: spin 60s linear infinite;
   pointer-events: none;
 }
@@ -1897,86 +1897,148 @@ picture img,
   position: relative;
 }
 .reviews__head {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  flex-wrap: wrap;
-  gap: 1.5rem;
-}
-.reviews__controls {
-  display: flex;
-  gap: 0.6rem;
-  margin-bottom: 2.5rem;
-}
-.reviews__viewport {
-  overflow: hidden;
-  margin-inline: calc(var(--gutter) * -1);
-  padding-inline: var(--gutter);
-}
-.reviews__track {
-  display: flex;
-  gap: 1.25rem;
-  transition: transform 0.8s var(--ease-out);
-}
-.review {
-  flex: none;
-  width: min(86vw, 520px);
-  padding: clamp(1.75rem, 3vw, 2.5rem);
   display: grid;
-  gap: 1.25rem;
-  align-content: start;
-  transition: opacity 0.5s;
+  justify-items: center;
+  text-align: center;
 }
-.review blockquote,
-.review .stars,
-.review__who {
-  user-select: none;
+.reviews__head .eyebrow::after {
+  content: "";
+  width: 36px;
+  height: 1px;
+  background: currentColor;
 }
-.review.is-dim {
-  opacity: 0.45;
+.reviews__head .script {
+  margin-left: 0;
+}
+.rv {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.25rem;
+  padding-top: clamp(1rem, 3vw, 2.5rem);
 }
 .stars {
   display: flex;
-  gap: 0.2rem;
+  gap: 0.25rem;
   color: var(--gold);
 }
-.review blockquote {
+.rv__quote-wrap {
+  position: relative;
+  padding-inline: clamp(1.5rem, 5vw, 3.5rem);
+}
+.rv__mark {
+  position: absolute;
+  font-family: var(--f-serif);
+  font-size: clamp(7rem, 14vw, 11rem);
+  line-height: 1;
+  color: var(--gold);
+  opacity: 0.12;
+  user-select: none;
+  pointer-events: none;
+}
+.rv__mark--open {
+  left: -0.5rem;
+  top: -0.45em;
+}
+.rv__mark--close {
+  right: -0.5rem;
+  bottom: -0.85em;
+}
+.rv__quote {
   font-family: var(--f-serif);
   font-style: italic;
-  font-size: clamp(1.3rem, 2vw, 1.6rem);
-  line-height: 1.35;
+  font-weight: 500;
+  font-size: clamp(1.8rem, 3.6vw, 3rem);
+  line-height: 1.25;
+  text-align: center;
+  max-width: 24ch;
+  margin-inline: auto;
+  min-height: 3.75em; /* altura fixa: os avatares não "pulam" na troca */
+  display: grid;
+  place-items: center;
+  transition: opacity 0.4s ease-out, filter 0.4s ease-out, transform 0.4s ease-out;
 }
-.review__who {
+.rv__role {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+/* estado de troca: some com blur, volta nítido */
+.rv.is-switching .rv__quote {
+  opacity: 0;
+  filter: blur(6px);
+  transform: scale(0.98);
+}
+.rv.is-switching .rv__role {
+  opacity: 0;
+  transform: translateY(8px);
+}
+.rv__people {
   display: flex;
-  align-items: center;
-  gap: 0.9rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
 }
-.review__who strong {
-  display: block;
+.rv-pill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  padding: 4px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  color: var(--text);
+  transition: background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1), padding 0.5s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.5s, border-color 0.3s;
+}
+.rv-pill .avatar {
+  width: 40px;
+  height: 40px;
+  border-width: 0;
+  transition: box-shadow 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s;
+}
+/* o nome abre/fecha animando a coluna do grid (0fr → 1fr) */
+.rv-pill__name {
+  display: grid;
+  grid-template-columns: 0fr;
+  opacity: 0;
+  margin-left: 0;
+  transition: grid-template-columns 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s, margin 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.rv-pill__name > span {
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: 0.88rem;
   font-weight: 500;
 }
-.review__who small {
-  font-size: 0.75rem;
-  color: var(--text-muted);
+.rv-pill:hover:not(.is-active),
+.rv-pill:focus-visible:not(.is-active) {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: var(--border);
 }
-.avatar {
-  width: 46px;
-  height: 46px;
-  border-color: rgba(255, 255, 255, 0.1);
+.rv-pill:hover:not(.is-active) .avatar {
+  transform: scale(1.05);
 }
-.reviews__dots {
-  display: flex;
-  gap: 0.5rem;
-  margin-top: 2rem;
+.rv-pill.is-active,
+.rv-pill:hover,
+.rv-pill:focus-visible {
+  padding-right: 1.1rem;
 }
-.reviews__dots span {
-  width: 28px;
-  height: 2px;
-  background: var(--border);
-  transition: background 0.3s;
+.rv-pill.is-active .rv-pill__name,
+.rv-pill:hover .rv-pill__name,
+.rv-pill:focus-visible .rv-pill__name {
+  grid-template-columns: 1fr;
+  opacity: 1;
+  margin-left: 0.6rem;
 }
-.reviews__dots span.is-active {
-  background: var(--gold);
+.rv-pill.is-active {
+  background: var(--text);
+  color: var(--bg);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+}
+.rv-pill.is-active .avatar {
+  box-shadow: 0 0 0 2px rgba(10, 9, 8, 0.3);
 }
 
 /* ---------- 17. Reservas (diagonal vermelho/preto) ---------- */

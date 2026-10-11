@@ -673,41 +673,38 @@
         <div class="reviews__sun" aria-hidden="true"></div>
         <div class="container">
           <div class="reviews__head">
-            <div>
-              <p class="eyebrow">Depoimentos</p>
-              <h2 class="title" id="rev-title"><span class="script" data-script>Palavras</span><span data-split>de quem provou</span></h2>
-            </div>
-            <div class="reviews__controls">
-              <button class="icon-btn" id="rev-prev" aria-label="Depoimento anterior"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#i-chevron-left" /></svg></button>
-              <button class="icon-btn" id="rev-toggle" aria-label="Pausar rotação automática" aria-pressed="false"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#i-pause" /></svg></button>
-              <button class="icon-btn" id="rev-next" aria-label="Próximo depoimento"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#i-chevron-right" /></svg></button>
-            </div>
+            <p class="eyebrow">Depoimentos</p>
+            <h2 class="title" id="rev-title"><span class="script" data-script>Palavras</span><span data-split>de quem provou</span></h2>
           </div>
-          <div class="reviews__viewport" aria-roledescription="carrossel" aria-label="Depoimentos de clientes">
-            <ul class="reviews__track" id="reviews-track" aria-live="off">
-              <li class="review glass-card" aria-roledescription="slide" aria-label="1 de 4">
-                <div class="stars" aria-label="5 de 5 estrelas"><svg class="icon icon--fill" aria-hidden="true"><use href="assets/icons.svg#i-star" /></svg><svg class="icon icon--fill" aria-hidden="true"><use href="assets/icons.svg#i-star" /></svg><svg class="icon icon--fill" aria-hidden="true"><use href="assets/icons.svg#i-star" /></svg><svg class="icon icon--fill" aria-hidden="true"><use href="assets/icons.svg#i-star" /></svg><svg class="icon icon--fill" aria-hidden="true"><use href="assets/icons.svg#i-star" /></svg></div>
-                <blockquote>“O omakase foi uma aula. Cada peça chegou no tempo certo, com o arroz ainda morno. Melhor sushi que comi fora do Japão.”</blockquote>
-                <p class="review__who"><span class="avatar" style="--h: 18">MA</span><span><strong>Mariana A.</strong><small>Omakase no balcão</small></span></p>
-              </li>
-              <li class="review glass-card" aria-roledescription="slide" aria-label="2 de 4">
-                <div class="stars" aria-label="5 de 5 estrelas"><svg class="icon icon--fill" aria-hidden="true"><use href="assets/icons.svg#i-star" /></svg><svg class="icon icon--fill" aria-hidden="true"><use href="assets/icons.svg#i-star" /></svg><svg class="icon icon--fill" aria-hidden="true"><use href="assets/icons.svg#i-star" /></svg><svg class="icon icon--fill" aria-hidden="true"><use href="assets/icons.svg#i-star" /></svg><svg class="icon icon--fill" aria-hidden="true"><use href="assets/icons.svg#i-star" /></svg></div>
-                <blockquote>“O salmão maçaricado derrete. Ambiente lindo, atendimento atento sem ser invasivo. Já virou nosso lugar de aniversário.”</blockquote>
-                <p class="review__who"><span class="avatar" style="--h: 32">RT</span><span><strong>Rafael T.</strong><small>Jantar a dois</small></span></p>
-              </li>
-              <li class="review glass-card" aria-roledescription="slide" aria-label="3 de 4">
-                <div class="stars" aria-label="5 de 5 estrelas"><svg class="icon icon--fill" aria-hidden="true"><use href="assets/icons.svg#i-star" /></svg><svg class="icon icon--fill" aria-hidden="true"><use href="assets/icons.svg#i-star" /></svg><svg class="icon icon--fill" aria-hidden="true"><use href="assets/icons.svg#i-star" /></svg><svg class="icon icon--fill" aria-hidden="true"><use href="assets/icons.svg#i-star" /></svg><svg class="icon icon--fill" aria-hidden="true"><use href="assets/icons.svg#i-star" /></svg></div>
-                <blockquote>“Peixe absurdamente fresco. Dá para sentir a diferença no primeiro niguiri. O combinado do chef vale cada centavo.”</blockquote>
-                <p class="review__who"><span class="avatar" style="--h: 4">JL</span><span><strong>Juliana L.</strong><small>Combinado do chef</small></span></p>
-              </li>
-              <li class="review glass-card" aria-roledescription="slide" aria-label="4 de 4">
-                <div class="stars" aria-label="5 de 5 estrelas"><svg class="icon icon--fill" aria-hidden="true"><use href="assets/icons.svg#i-star" /></svg><svg class="icon icon--fill" aria-hidden="true"><use href="assets/icons.svg#i-star" /></svg><svg class="icon icon--fill" aria-hidden="true"><use href="assets/icons.svg#i-star" /></svg><svg class="icon icon--fill" aria-hidden="true"><use href="assets/icons.svg#i-star" /></svg><svg class="icon icon--fill" aria-hidden="true"><use href="assets/icons.svg#i-star" /></svg></div>
-                <blockquote>“Sentamos no balcão e foi um espetáculo. As lanternas, as cerejeiras, o silêncio. Uma experiência, não só um jantar.”</blockquote>
-                <p class="review__who"><span class="avatar" style="--h: 40">CS</span><span><strong>Carlos S.</strong><small>Balcão sakura</small></span></p>
-              </li>
-            </ul>
-          </div>
-          <div class="reviews__dots" id="reviews-dots" aria-hidden="true"></div>
+
+          <!-- Estilo "Unique Testimonial": citação central com troca em fade/blur e avatares em pílula -->
+          <figure class="rv">
+            <div class="stars" aria-label="5 de 5 estrelas"><svg class="icon icon--fill" aria-hidden="true"><use href="assets/icons.svg#i-star" /></svg><svg class="icon icon--fill" aria-hidden="true"><use href="assets/icons.svg#i-star" /></svg><svg class="icon icon--fill" aria-hidden="true"><use href="assets/icons.svg#i-star" /></svg><svg class="icon icon--fill" aria-hidden="true"><use href="assets/icons.svg#i-star" /></svg><svg class="icon icon--fill" aria-hidden="true"><use href="assets/icons.svg#i-star" /></svg></div>
+            <div class="rv__quote-wrap">
+              <span class="rv__mark rv__mark--open" aria-hidden="true">“</span>
+              <blockquote class="rv__quote" id="rv-quote" aria-live="polite">O omakase foi uma aula. Cada peça chegou no tempo certo.</blockquote>
+              <span class="rv__mark rv__mark--close" aria-hidden="true">”</span>
+            </div>
+            <figcaption class="rv__role" id="rv-role">Omakase no balcão</figcaption>
+            <div class="rv__people" role="group" aria-label="Escolha um depoimento">
+              <button class="rv-pill is-active" type="button" aria-pressed="true" data-i="0" data-quote="O omakase foi uma aula. Cada peça chegou no tempo certo." data-role="Omakase no balcão">
+                <span class="avatar" style="--h: 18" aria-hidden="true">MA</span>
+                <span class="rv-pill__name"><span>Mariana A.</span></span>
+              </button>
+              <button class="rv-pill" type="button" aria-pressed="false" data-i="1" data-quote="O salmão maçaricado derrete. Já virou nosso lugar de aniversário." data-role="Jantar a dois">
+                <span class="avatar" style="--h: 32" aria-hidden="true">RT</span>
+                <span class="rv-pill__name"><span>Rafael T.</span></span>
+              </button>
+              <button class="rv-pill" type="button" aria-pressed="false" data-i="2" data-quote="Peixe absurdamente fresco. Dá para sentir no primeiro niguiri." data-role="Combinado do chef">
+                <span class="avatar" style="--h: 4" aria-hidden="true">JL</span>
+                <span class="rv-pill__name"><span>Juliana L.</span></span>
+              </button>
+              <button class="rv-pill" type="button" aria-pressed="false" data-i="3" data-quote="Uma experiência, não só um jantar. O silêncio do balcão diz tudo." data-role="Balcão sakura">
+                <span class="avatar" style="--h: 40" aria-hidden="true">CS</span>
+                <span class="rv-pill__name"><span>Carlos S.</span></span>
+              </button>
+            </div>
+          </figure>
         </div>
       </section>
 
